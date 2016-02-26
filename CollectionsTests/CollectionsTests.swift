@@ -9,28 +9,37 @@
 import XCTest
 @testable import Collections
 
-class CollectionsTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class CollectionsTests: XCTestCase
+{
+    func test_Queue()
+    {
+        let queue = Queue<Int>()
+
+        XCTAssertNil(queue.dequeue())
+
+        queue.enqueue(1)
+        
+        XCTAssertEqual(queue.dequeue(), 1)
+        XCTAssertNil(queue.dequeue())
+
+        queue.enqueue(1)
+        queue.enqueue(2)
+        
+        XCTAssertEqual(queue.dequeue(), 1)
+        XCTAssertEqual(queue.dequeue(), 2)
+        XCTAssertNil(queue.dequeue())
+
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.enqueue(3)
+        
+        XCTAssertEqual(queue.dequeue(), 1)
+        
+        queue.enqueue(1)
+        
+        XCTAssertEqual(queue.dequeue(), 2)
+        XCTAssertEqual(queue.dequeue(), 3)
+        XCTAssertEqual(queue.dequeue(), 1)
+        XCTAssertNil(queue.dequeue())
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
