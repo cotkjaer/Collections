@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 Christian Otkjær. All rights reserved.
 //
 
-import Foundation
-
-
 //MARK: - Functional Inits
 
 public extension Set
@@ -37,40 +34,66 @@ public extension Set
     }
 }
 
+// MARK: - Operators
+
+public func - <T, S : SequenceType where S.Generator.Element == T>(lhs: Set<T>, rhs: S) -> Set<T>
+{
+    return lhs.subtract(rhs)
+}
+
+public func + <T, S : SequenceType where S.Generator.Element == T>(lhs: Set<T>, rhs: S) -> Set<T>
+{
+    return lhs.union(rhs)
+}
+
 // MARK: - Operators with optional arguments
 
-public func + <T:Hashable>(lhs: Set<T>?, rhs: T) -> Set<T>
+public func + <T>(lhs: Set<T>?, rhs: T) -> Set<T>
 {
     return Set(rhs).union(lhs)
 }
 
-public func + <T:Hashable>(lhs: T, rhs: Set<T>?) -> Set<T>
+public func + <T>(lhs: T, rhs: Set<T>?) -> Set<T>
 {
     return rhs + lhs
 }
 
-public func - <T:Hashable, S : SequenceType where S.Generator.Element == T>(lhs: Set<T>, rhs: S?) -> Set<T>
+public func += <T, S : SequenceType where S.Generator.Element == T>(inout lhs: Set<T>, rhs: S?)
+{
+    lhs.unionInPlace(rhs)
+}
+
+public func += <T>(inout lhs: Set<T>, rhs: T?)
+{
+    lhs.insert(rhs)
+}
+
+public func - <T, S : SequenceType where S.Generator.Element == T>(lhs: Set<T>, rhs: S?) -> Set<T>
 {
     if let r = rhs
     {
-        return lhs.subtract(r)
+        return lhs - r
     }
     
     return lhs
 }
 
-public func - <T:Hashable>(lhs: Set<T>, rhs: T?) -> Set<T>
+
+public func - <T>(lhs: Set<T>, rhs: T?) -> Set<T>
 {
     return lhs - Set(rhs)
 }
 
-public func -= <T:Hashable, S : SequenceType where S.Generator.Element == T>(inout lhs: Set<T>, rhs: S?)
+public func -= <T, S : SequenceType where S.Generator.Element == T>(inout lhs: Set<T>, rhs: S?)
 {
-    if let r = rhs
-    {
-        lhs.subtractInPlace(r)
-    }
+    lhs.subtractInPlace(rhs)
 }
+
+public func -= <T>(inout lhs: Set<T>, rhs: T?)
+{
+    lhs.remove(rhs)
+}
+
 
 
 // MARK: - Optionals
@@ -120,10 +143,18 @@ public extension Set
             unionInPlace(s)
         }
     }
+
+    mutating func subtractInPlace<S : SequenceType where S.Generator.Element == Element>(sequence: S?)
+    {
+        if let s = sequence
+        {
+            subtractInPlace(s)
+        }
+    }
+
     
     /// Insert an optional element into the set
     /// - returns: **true** if the element was inserted, **false** otherwise
-    @warn_unused_result
     mutating func insert(optionalElement: Element?) -> Bool
     {
         if let element = optionalElement
@@ -137,6 +168,19 @@ public extension Set
         
         return false
     }
+
+    /// Insert an optional element into the set
+    /// - returns: **true** if the element was inserted, **false** otherwise
+    mutating func remove(optionalElement: Element?) -> Element?
+    {
+        if let element = optionalElement
+        {
+            return remove(element)
+        }
+        
+        return nil
+    }
+
     
     /// Return a `Set` contisting of the non-nil results of applying `transform` to each member of `self`
     @warn_unused_result
@@ -209,7 +253,3 @@ public extension Set
         return subsets
     }
 }
-
-
-
-

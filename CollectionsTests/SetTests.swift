@@ -8,7 +8,7 @@
 
 import XCTest
 
-
+@testable import Collections
 
 //MARK: - Hashable
 
@@ -141,5 +141,47 @@ class SetTests: XCTestCase
         XCTAssertEqual(set12.subsets().count, 2)
         
         XCTAssertEqual(set12.subsets(), Set(set1, set2))
+    }
+    
+    func test_operators()
+    {
+        var s = Set(1,2,3,4)
+        let a = Array(arrayLiteral: 2,3)
+        
+        XCTAssertEqual(s - s, Set<Int>())
+        XCTAssertEqual(s - a, Set(1,4))
+        
+        s -= Set(5,6,7)
+        
+        XCTAssertEqual(s, Set(1,2,3,4))
+        
+        s += Set(4,5,6,7)
+
+        XCTAssertEqual(s, Set(1,2,3,4,5,6,7))
+
+        s += a
+
+        XCTAssertEqual(s, Set(1,2,3,4,5,6,7))
+
+        s -= a
+        
+        XCTAssertEqual(s, Set(1,4,5,6,7))
+
+        XCTAssertEqual(s + 2, Set(1,2,4,5,6,7))
+
+        XCTAssertEqual(s + 1, Set(1,4,5,6,7))
+
+        s += 1
+        
+        XCTAssertEqual(s, Set(1,4,5,6,7))
+
+        s += 2
+        
+        XCTAssertEqual(s, Set(1,2,4,5,6,7))
+        
+        s = Set(3,4) + a + Set(1)
+        
+        XCTAssertEqual(s, Set(1,2,3,4))
+        
     }
 }
