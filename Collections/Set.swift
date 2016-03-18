@@ -59,10 +59,17 @@ public func - <T:Hashable, S : SequenceType where S.Generator.Element == T>(lhs:
     return lhs
 }
 
-
 public func - <T:Hashable>(lhs: Set<T>, rhs: T?) -> Set<T>
 {
     return lhs - Set(rhs)
+}
+
+public func -= <T:Hashable, S : SequenceType where S.Generator.Element == T>(inout lhs: Set<T>, rhs: S?)
+{
+    if let r = rhs
+    {
+        lhs.subtractInPlace(r)
+    }
 }
 
 
