@@ -49,19 +49,13 @@ public extension Array
      */
     func mapToDictionary<K:Hashable, V>(@noescape transform: (Element) -> (K, V)?) -> Dictionary<K, V>
     {
-        return flatMap(transform).reduce([:]) { (var dictionary, element) in
-            dictionary[element.0] = element.1
-            return dictionary
-        }
+        var d = Dictionary<K, V>()
         
-        //        return reduce([:]) {
-        //            (var dictionary, element) in
-        //            if let (key, value) = transform(element)
-        //            {
-        //                dictionary[key] = value
-        //            }
-        //            return dictionary
-        //        }
+        forEach { (e) in
+            if let (k, v) = transform(e) { d[k] = v }
+        }
+
+        return d
     }
 }
 

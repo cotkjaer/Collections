@@ -35,16 +35,23 @@ public func min<S : SequenceType>(sequence: S, isOrderedBefore: (S.Generator.Ele
 public extension SequenceType
 {
     /**
-     Calls the passed block for each element in the array, either n times or infinitely, if n isn't specified
+     Calls the passed block for each element in the sequence, either n times or infinitely, if n isn't specified
      
      - parameter n: the number of times to cycle through
      - parameter block: the block to run for each element in each cycle
      */
-    func cycle(n: Int = Int.max, @noescape block: Generator.Element -> ())
+    func cycle(n: Int? = nil, @noescape block: Generator.Element -> ())
     {
-        for var cyclesRun = 0; cyclesRun < n; cyclesRun = cyclesRun &+ 1
+        if let n = n
         {
-            forEach(block)
+            for _ in 0.stride(to: n, by: 1)
+            {
+                forEach(block)
+            }
+        }
+        else
+        {
+            while true { forEach(block) }
         }
     }
 }
