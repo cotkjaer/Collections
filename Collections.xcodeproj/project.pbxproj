@@ -26,6 +26,7 @@
 		8FE664D51CF5B1B1003AD6BC /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE664D41CF5B1B1003AD6BC /* Dictionary.swift */; };
 		8FE664E11CF6D24C003AD6BC /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE664E01CF6D24C003AD6BC /* Heap.swift */; };
 		8FE664E31CF6E5D9003AD6BC /* HeapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE664E21CF6E5D9003AD6BC /* HeapTests.swift */; };
+		8FE664E91CF6FCC8003AD6BC /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE664E81CF6FCC8003AD6BC /* DictionaryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		8FE664D41CF5B1B1003AD6BC /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		8FE664E01CF6D24C003AD6BC /* Heap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 		8FE664E21CF6E5D9003AD6BC /* HeapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeapTests.swift; sourceTree = "<group>"; };
+		8FE664E81CF6FCC8003AD6BC /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				8FCE6B7F1C8061080079A587 /* SequenceTypeTests.swift */,
 				8FCE6B801C8061080079A587 /* SetTests.swift */,
 				8FE664E21CF6E5D9003AD6BC /* HeapTests.swift */,
+				8FE664E81CF6FCC8003AD6BC /* DictionaryTests.swift */,
 			);
 			path = CollectionsTests;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			files = (
 				8FCE6B861C8061080079A587 /* ArrayTests.swift in Sources */,
 				8FCE6B851C8061080079A587 /* NSIndexSetTests.swift in Sources */,
+				8FE664E91CF6FCC8003AD6BC /* DictionaryTests.swift in Sources */,
 				8FCE6B831C8061080079A587 /* SequenceTypeTests.swift in Sources */,
 				8FE664E31CF6E5D9003AD6BC /* HeapTests.swift in Sources */,
 				8FCE6B841C8061080079A587 /* SetTests.swift in Sources */,

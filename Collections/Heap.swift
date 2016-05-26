@@ -10,6 +10,15 @@ import Foundation
 
 public struct Heap<Element>
 {
+    public init<S: SequenceType where S.Generator.Element == Element>(elements: S, isOrderedBefore: (Element, Element) -> Bool)
+    {
+        self.isOrderedBefore = isOrderedBefore
+        for e in elements
+        {
+            push(e)
+        }
+    }
+    
     public init(isOrderedBefore: (Element, Element) -> Bool)
     {
         self.isOrderedBefore = isOrderedBefore
@@ -144,5 +153,10 @@ extension Heap where Element : Comparable
     public init()
     {
         self.init(isOrderedBefore: <)
+    }
+    
+    public init<S: SequenceType where S.Generator.Element == Element>(elements: S)
+    {
+        self.init(elements: elements, isOrderedBefore: <)
     }
 }
