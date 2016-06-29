@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F253ED61CF72F55001FE51E /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253ED51CF72F55001FE51E /* Graph.swift */; };
+		8F253ED81CF73C65001FE51E /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253ED71CF73C65001FE51E /* Stack.swift */; };
+		8F253EDA1CF844A1001FE51E /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253ED91CF844A1001FE51E /* GraphTests.swift */; };
+		8FB222841CFCCFBF009E0176 /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB222831CFCCFBF009E0176 /* BinaryTree.swift */; };
 		8FCE6B501C805CA00079A587 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCE6B481C805CA00079A587 /* Array.swift */; };
 		8FCE6B511C805CA00079A587 /* SequenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCE6B491C805CA00079A587 /* SequenceType.swift */; };
 		8FCE6B521C805CA00079A587 /* CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCE6B4A1C805CA00079A587 /* CollectionType.swift */; };
@@ -40,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F253ED51CF72F55001FE51E /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		8F253ED71CF73C65001FE51E /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		8F253ED91CF844A1001FE51E /* GraphTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTests.swift; sourceTree = "<group>"; };
+		8FB222831CFCCFBF009E0176 /* BinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
 		8FCE6B481C805CA00079A587 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8FCE6B491C805CA00079A587 /* SequenceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceType.swift; sourceTree = "<group>"; };
 		8FCE6B4A1C805CA00079A587 /* CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionType.swift; sourceTree = "<group>"; };
@@ -131,9 +139,12 @@
 				8FCE6B4D1C805CA00079A587 /* Striding.swift */,
 				8FCE6B4E1C805CA00079A587 /* List.swift */,
 				8FCE6B4F1C805CA00079A587 /* Queue.swift */,
+				8F253ED71CF73C65001FE51E /* Stack.swift */,
 				8FCE6B871C8061170079A587 /* NSIndexSet.swift */,
 				8FE664D41CF5B1B1003AD6BC /* Dictionary.swift */,
 				8FE664E01CF6D24C003AD6BC /* Heap.swift */,
+				8F253ED51CF72F55001FE51E /* Graph.swift */,
+				8FB222831CFCCFBF009E0176 /* BinaryTree.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -149,6 +160,7 @@
 				8FCE6B801C8061080079A587 /* SetTests.swift */,
 				8FE664E21CF6E5D9003AD6BC /* HeapTests.swift */,
 				8FE664E81CF6FCC8003AD6BC /* DictionaryTests.swift */,
+				8F253ED91CF844A1001FE51E /* GraphTests.swift */,
 			);
 			path = CollectionsTests;
 			sourceTree = "<group>";
@@ -261,12 +273,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F253ED61CF72F55001FE51E /* Graph.swift in Sources */,
+				8F253ED81CF73C65001FE51E /* Stack.swift in Sources */,
 				8FCE6B881C8061170079A587 /* NSIndexSet.swift in Sources */,
 				8FCE6B541C805CA00079A587 /* Set.swift in Sources */,
 				8FCE6B511C805CA00079A587 /* SequenceType.swift in Sources */,
 				8FCE6B561C805CA00079A587 /* List.swift in Sources */,
 				8FCE6B571C805CA00079A587 /* Queue.swift in Sources */,
 				8FE664D51CF5B1B1003AD6BC /* Dictionary.swift in Sources */,
+				8FB222841CFCCFBF009E0176 /* BinaryTree.swift in Sources */,
 				8FCE6B501C805CA00079A587 /* Array.swift in Sources */,
 				8FCE6B531C805CA00079A587 /* RangeReplaceableCollectionType.swift in Sources */,
 				8FCE6B521C805CA00079A587 /* CollectionType.swift in Sources */,
@@ -279,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F253EDA1CF844A1001FE51E /* GraphTests.swift in Sources */,
 				8FCE6B861C8061080079A587 /* ArrayTests.swift in Sources */,
 				8FCE6B851C8061080079A587 /* NSIndexSetTests.swift in Sources */,
 				8FE664E91CF6FCC8003AD6BC /* DictionaryTests.swift in Sources */,

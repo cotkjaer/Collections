@@ -70,6 +70,8 @@ public struct LinkedList<Element>
     
     var isEmpty : Bool { return head == nil && tail == nil }
     
+    var count : Int { var c = 0; var link = head; while link != nil { c += 1; link = link?.next }; return c }
+    
     mutating func popFirst() -> Element?
     {
         if let element = head?.element
@@ -104,7 +106,6 @@ public struct LinkedList<Element>
         return nil
     }
     
-    
     mutating func append(element: Element)
     {
         if isEmpty
@@ -134,5 +135,37 @@ public struct LinkedList<Element>
             head = head?.prepend(element)
         }
     }
+    
+    public func contains(check: Element -> Bool) -> Bool
+    {
+        var link = head
+        
+        var found = false
+        
+        while link != nil && !found
+        {
+            if check(link!.element)
+            {
+                found = true
+            }
+            else
+            {
+                link = link?.next
+            }
+        }
+        
+        return found
+    }
 }
+
+// MARK: - Contains
+
+extension LinkedList where Element : Equatable
+{
+    public func contains(element: Element) -> Bool
+    {
+        return contains({ $0 == element })
+    }
+}
+
 
