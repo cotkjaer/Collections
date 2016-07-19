@@ -59,48 +59,41 @@ public extension CollectionType
 
 // MARK: - Optional versions
 
-public extension CollectionType where Generator.Element : Equatable
+extension CollectionType where Generator.Element : Equatable
 {
     ///Returns the first index where `optionalElement` appears in `self` or `nil` if `optionalElement` is not found.
     @warn_unused_result
     public func indexOf(optionalElement: Generator.Element?) -> Index?
     {
-        if let element = optionalElement
-        {
-            return indexOf { $0 == element }
-        }
+        guard let element = optionalElement else { return nil }
         
-        return nil
+        return indexOf { $0 == element }
     }
     
     ///Returns the first element that is equal to `optionalElement` or `nil` if `optionalElement` is not found.
     @warn_unused_result
     public func find(optionalElement: Generator.Element?) -> Generator.Element?
     {
-        if let element = optionalElement
-        {
-            return find { $0 == element }
-        }
-        
-        return nil
+        guard let element = optionalElement else { return nil }
+
+        return find { $0 == element }
     }
-}
 
-// MARK: - Contains
+    // MARK: - Contains
 
-extension CollectionType where Generator.Element : Equatable
-{
     /// Returns `true` if all elements in `collection` are also in `self`, `false` otherwise
-    func contains<C : CollectionType where Generator.Element == C.Generator.Element>(collection: C) -> Bool
+    @warn_unused_result
+    public func contains<C : CollectionType where Generator.Element == C.Generator.Element>(optionalCollection: C?) -> Bool
     {
-        return collection.all({ self.contains($0) })
+        guard let collection = optionalCollection else { return false }
+        
+        return collection.all({ contains($0) })
     }
 }
-
 
 // MARK: - at
 
-public extension CollectionType
+extension CollectionType
 {
     /**
      Creates an array with the elements at the specified indexes.
