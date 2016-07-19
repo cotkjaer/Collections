@@ -21,8 +21,8 @@ public func max<S : SequenceType where S.Generator.Element:Comparable>(sequence:
 public func min<S : SequenceType where S.Generator.Element:Comparable>(sequence: S) -> S.Generator.Element?
 {
     return sequence.minElement()
-
-//    return sequence.reduce(nil, combine: { $0 == nil ? $1 : $0 < $1 ? $0 : $1 })
+    
+    //    return sequence.reduce(nil, combine: { $0 == nil ? $1 : $0 < $1 ? $0 : $1 })
 }
 
 public func min<S : SequenceType>(sequence: S, isOrderedBefore: (S.Generator.Element, S.Generator.Element) throws -> Bool) rethrows -> S.Generator.Element?
@@ -210,13 +210,13 @@ public extension SequenceType
 public extension SequenceType where Generator.Element: Hashable
 {
     var uniques: [Generator.Element]
-        {
-            var added = Set<Generator.Element>()
-            
-            return filter {
-                if added.contains($0) { return false }
-                else { added.insert($0); return true }
-            }
+    {
+        var added = Set<Generator.Element>()
+        
+        return filter {
+            if added.contains($0) { return false }
+            else { added.insert($0); return true }
+        }
     }
     
     /**
@@ -280,4 +280,3 @@ extension SequenceType where Generator.Element: Hashable
         return frequency.map{($0.0, $0.1)}.sort{ $0.1 > $1.1 }
     }
 }
-

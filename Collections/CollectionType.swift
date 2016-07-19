@@ -86,6 +86,17 @@ public extension CollectionType where Generator.Element : Equatable
     }
 }
 
+// MARK: - Contains
+
+extension CollectionType where Generator.Element : Equatable
+{
+    /// Returns `true` if all elements in `collection` are also in `self`, `false` otherwise
+    func contains<C : CollectionType where Generator.Element == C.Generator.Element>(collection: C) -> Bool
+    {
+        return collection.all({ self.contains($0) })
+    }
+}
+
 
 // MARK: - at
 

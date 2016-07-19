@@ -40,7 +40,7 @@ class GraphTests: XCTestCase
 
         XCTAssertEqual(g.vertices.count, 5)
     }
-    
+    /*
     func test_addEdges()
     {
         let g = Graph(vertices: ["A", "B", "C", "D", "E"])
@@ -114,5 +114,6 @@ class GraphTests: XCTestCase
         XCTAssertEqual(p?.total, 12)
 
     }
+ */
 
 }
