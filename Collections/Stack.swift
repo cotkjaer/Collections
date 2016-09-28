@@ -9,15 +9,15 @@
 import Foundation
 
 /// Classic Stack
-public class Stack<Element>
+open class Stack<Element>
 {
-    private var elements: [Element] = Array<Element>()
+    fileprivate var elements: [Element] = Array<Element>()
     
-    public var isEmpty: Bool { return elements.isEmpty }
+    open var isEmpty: Bool { return elements.isEmpty }
     
-    public func push(element: Element) { elements.append(element) }
+    open func push(_ element: Element) { elements.append(element) }
     
-    public func pop() -> Element { return elements.removeLast() }
+    open func pop() -> Element { return elements.removeLast() }
     
-    public func pop() -> Element? { return isEmpty ? nil : elements.removeLast() }
+    open func pop() -> Element? { return isEmpty ? nil : elements.removeLast() }
 }

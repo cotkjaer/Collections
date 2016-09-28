@@ -52,12 +52,12 @@ class SequenceTypeTests: XCTestCase {
         XCTAssertNil(min(emptyArray))
         XCTAssertNil(max(emptyArray))
         
-        func compareLexio(lhs: String, rhs: String) -> Bool
+        func compareLexio(_ lhs: String, rhs: String) -> Bool
         {
-            return lhs.compare(rhs, options: NSStringCompareOptions.CaseInsensitiveSearch) != NSComparisonResult.OrderedDescending
+            return lhs.compare(rhs, options: NSString.CompareOptions.caseInsensitive) != ComparisonResult.orderedDescending
         }
         
-        func characterCount(string: String) -> Int
+        func characterCount(_ string: String) -> Int
         {
             return string.characters.count
         }

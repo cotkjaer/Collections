@@ -52,17 +52,17 @@ class SetTests: XCTestCase
         XCTAssertEqual(setABC.count, 3)
         XCTAssertEqual(setBC.count, 2)
         
-        XCTAssert(setABC.dynamicType == Set<A>.self)
+        XCTAssert(type(of: setABC) == Set<A>.self)
         
-        XCTAssert(setABC.dynamicType == setBC.dynamicType)
+        XCTAssert(type(of: setABC) == type(of: setBC))
         
         let mapped = setABC.map({ $0 as? C })
         
-        XCTAssert(mapped.dynamicType == Set<C>.self)
+        XCTAssert(type(of: mapped) == Set<C>.self)
         
         XCTAssertEqual(mapped.count, 1)
         
-        XCTAssertEqual(setABC.map{ if $0.dynamicType == A.self { return nil } ; return $0 }, setBC)
+        XCTAssertEqual(setABC.map{ if type(of: $0) == A.self { return nil } ; return $0 }, setBC)
     }
     
     func testSift()
@@ -70,11 +70,11 @@ class SetTests: XCTestCase
         let setABC = Set<A>(A(), B(), A(), C(), nil, C())
         let setBC = Set<A>(B(), C(), B(), C(), B(), C(), B(), C(), B(), C(), nil, C())
         
-        let filteredForC = setABC.sift({$0 is C})
+        let filteredForC = setABC.sift {$0 is C}
         
-        XCTAssert(filteredForC.dynamicType == Set<A>.self)
+        XCTAssert(type(of: filteredForC) == Set<A>.self)
         
-        XCTAssert(filteredForC.dynamicType == setABC.dynamicType)
+        XCTAssert(type(of: filteredForC) == type(of: setABC))
         
         XCTAssertEqual(filteredForC, setBC.sift({ $0 is C }))
         XCTAssertEqual(setBC.filter({ $0.hashValue == 1 }).count, 0)
@@ -91,21 +91,21 @@ class SetTests: XCTestCase
         
         var set = Set<Int>()
         
-        set.unionInPlace(noSet)
+        set.formUnion(noSet)
         
         XCTAssertEqual(set, Set())
         
-        set.unionInPlace(set23)
+        set.formUnion(set23)
         
         XCTAssertEqual(set, set23)
         
-        set.unionInPlace(noSet)
+        set.formUnion(noSet)
         
         XCTAssertEqual(set, set23)
         
         noSet = nil
         
-        set.unionInPlace(noSet)
+        set.formUnion(noSet)
         
         XCTAssertEqual(set, set23)
         
@@ -113,7 +113,7 @@ class SetTests: XCTestCase
         
         noSet = Set(4)
         
-        set.unionInPlace(noSet)
+        set.formUnion(noSet)
         
         XCTAssertEqual(set, Set(2,3,4))
         
@@ -179,7 +179,7 @@ class SetTests: XCTestCase
         
         XCTAssertEqual(s, Set(1,2,4,5,6,7))
         
-        s = Set(3,4) + a + Set(1)
+        s = Set(3,4) + Set(a) + Set(1)
         
         XCTAssertEqual(s, Set(1,2,3,4))
         

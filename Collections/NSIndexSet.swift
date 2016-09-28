@@ -8,25 +8,28 @@
 
 import Foundation
 
-// MARK: - Sets and NSIndexSet
 
-extension NSIndexSet 
+extension NSIndexSet
 {
-    public convenience init<S:SequenceType where S.Generator.Element == Int>(indicies: S)
+    // MARK: - Init
+    
+    public convenience init<S:Sequence>(indicies: S) where S.Iterator.Element == Int
     {
         let mutable = NSMutableIndexSet()
         
-        indicies.forEach { mutable.addIndex($0) }
+        indicies.forEach { mutable.add($0) }
         
-        self.init(indexSet: mutable)
+        self.init(indexSet: mutable as IndexSet)
     }
     
+    // MARK: - Sets and NSIndexSet
+    
     public var indicies : Set<Int>
-        {
-            var set = Set<Int>()
+    {
+        var set = Set<Int>()
         
-            enumerateIndexesUsingBlock { set.insert($0.0) }
+        self.forEach({ set.insert($0) })
         
-            return set
+        return set
     }
 }

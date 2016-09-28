@@ -32,14 +32,15 @@ class GraphTests: XCTestCase
 
         XCTAssertEqual(g.vertices.count, 4)
 
-        XCTAssert(g.addVertex("E"))
+        XCTAssert(g.add(vertex: "E"))
         
         XCTAssertEqual(g.vertices.count, 5)
 
-        XCTAssertFalse(g.addVertex("E"))
+        XCTAssertFalse(g.add(vertex: "E"))
 
         XCTAssertEqual(g.vertices.count, 5)
     }
+    
     /*
     func test_addEdges()
     {

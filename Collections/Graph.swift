@@ -8,25 +8,26 @@
 
 import Foundation
 
-public class Graph<Vertex: Hashable>
+open class Graph<Vertex: Hashable>
 {
     typealias Edge = (neighbor: Vertex, weight: Int)
     
-    private var edges = Dictionary<Vertex, Array<Edge>>()
+    fileprivate var edges = Dictionary<Vertex, Array<Edge>>()
     
     public init()
     {
         
     }
     
-    public convenience init<S:SequenceType where S.Generator.Element == Vertex>(vertices: S)
+    public convenience init<S:Sequence>(vertices: S) where S.Iterator.Element == Vertex
     {
         self.init()
         
-        vertices.forEach { addVertex($0) }
+        vertices.forEach { add(vertex: $0) }
     }
     
-    public func addVertex(vertex: Vertex) -> Bool
+    @discardableResult
+    open func add(vertex: Vertex) -> Bool
     {
         guard edges[vertex] == nil else { return false }
         
@@ -35,31 +36,31 @@ public class Graph<Vertex: Hashable>
         return true
     }
     
-    public func hasVertex(vertex: Vertex) -> Bool
+    open func has(vertex: Vertex) -> Bool
     {
         return edges[vertex] != nil
     }
     
-    func addEdgeWithWeight(weight: Int, fromVertex: Vertex, toVertex: Vertex)
+    func addEdgeWithWeight(_ weight: Int, fromVertex: Vertex, toVertex: Vertex)
     {
-        addVertex(fromVertex)
-        addVertex(toVertex)
+        add(vertex: fromVertex)
+        add(vertex: toVertex)
         edges[fromVertex]?.append((toVertex, weight))
     }
     
-    func edgesFromVertex(vertex: Vertex) -> [Edge]
+    func edges(from vertex: Vertex) -> [Edge]
     {
         return edges[vertex] ?? []
     }
 
-    func edgesFromVertex(vertex: Vertex, toVertex:Vertex) -> [Edge]
+    func edges(from fromVertex: Vertex, to toVertex:Vertex) -> [Edge]
     {
-        return (edges[vertex] ?? []).filter({ $0.neighbor == toVertex })
+        return (edges[fromVertex] ?? []).filter({ $0.neighbor == toVertex })
     }
     
-    func neighborsForVertex(vertex: Vertex) -> [Vertex]
+    func neighborsTo(vertex: Vertex) -> [Vertex]
     {
-        return edgesFromVertex(vertex).map({ $0.neighbor }).uniques() ?? []
+        return edges(from: vertex).map({ $0.neighbor }).uniques()
     }
 
     var vertices : Array<Vertex>  { return Array(edges.keys) }
@@ -77,7 +78,7 @@ extension Graph : CustomDebugStringConvertible, CustomStringConvertible
         {
             d += "\(v):\n"
 
-            for e in edgesFromVertex(v)
+            for e in edges(from: v)
             {
                 d += "\(v) -\(e.weight)-> \(e.neighbor)\n"
             }
@@ -104,7 +105,7 @@ struct Path<Vertex>
     
     var destination: Vertex { return edges.last!.neighbor }
     
-    private init(origin: Vertex, edge: Edge)
+    fileprivate init(origin: Vertex, edge: Edge)
     {
         self.origin = origin
         total = edge.weight
@@ -127,7 +128,7 @@ extension Path : CustomDebugStringConvertible, CustomStringConvertible
     {
         let edgeStrings = edges.map { " -\($0.weight)-> \($0.neighbor)" }
         
-        let edgesString = edgeStrings.joinWithSeparator("")
+        let edgesString = edgeStrings.joined(separator: "")
         
         return "\(origin)\(edgesString)"
     }
@@ -147,9 +148,9 @@ extension Graph
     /// - returns: The shortest path from origin to destination, if one could be found, nil otherwise
     func shortestPathFrom(from origin: Vertex, to destination: Vertex) -> Path<Vertex>?
     {
-        guard hasVertex(origin) else { return nil }
+        guard has(vertex: origin) else { return nil }
 
-        guard hasVertex(destination) else { return nil }
+        guard has(vertex: destination) else { return nil }
         
         guard origin != destination else { return nil }
         
@@ -157,7 +158,7 @@ extension Graph
 
         var frontier: Heap<Path<Vertex>> = Heap(isOrderedBefore: {$0.total < $1.total})
         
-        for edge in edgesFromVertex(origin)
+        for edge in edges(from: origin)
         {
             frontier.push(Path(origin: origin, edge: edge))
         }
@@ -168,7 +169,7 @@ extension Graph
             
             visited[shortestPath.destination] = true
             
-            for edge in edgesFromVertex(shortestPath.destination).filter({ visited[$0.neighbor] == nil })
+            for edge in edges(from : shortestPath.destination).filter({ visited[$0.neighbor] == nil })
             {
                 frontier.push(Path(path: shortestPath, edge: edge))
             }

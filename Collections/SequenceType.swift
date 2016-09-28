@@ -8,31 +8,31 @@
 
 // MARK: - Min & max
 
-public func max<S : SequenceType>(sequence: S, isOrderedBefore: (S.Generator.Element, S.Generator.Element) throws -> Bool) rethrows -> S.Generator.Element?
+public func max<S : Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
 {
-    return try sequence.maxElement(isOrderedBefore)
+    return try sequence.max(by: isOrderedBefore)
 }
 
-public func max<S : SequenceType where S.Generator.Element:Comparable>(sequence: S) -> S.Generator.Element?
+public func max<S : Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
 {
-    return sequence.maxElement()
+    return sequence.max()
 }
 
-public func min<S : SequenceType where S.Generator.Element:Comparable>(sequence: S) -> S.Generator.Element?
+public func min<S : Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
 {
-    return sequence.minElement()
+    return sequence.min()
     
     //    return sequence.reduce(nil, combine: { $0 == nil ? $1 : $0 < $1 ? $0 : $1 })
 }
 
-public func min<S : SequenceType>(sequence: S, isOrderedBefore: (S.Generator.Element, S.Generator.Element) throws -> Bool) rethrows -> S.Generator.Element?
+public func min<S : Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
 {
-    return try sequence.minElement(isOrderedBefore)
+    return try sequence.min(by: isOrderedBefore)
 }
 
 // MARK: - Cycle
 
-public extension SequenceType
+public extension Sequence
 {
     /**
      Calls the passed block for each element in the sequence, either n times or infinitely, if n isn't specified
@@ -40,11 +40,11 @@ public extension SequenceType
      - parameter n: the number of times to cycle through
      - parameter block: the block to run for each element in each cycle
      */
-    func cycle(n: Int? = nil, @noescape block: Generator.Element -> ())
+    func cycle(_ n: Int? = nil, block: (Iterator.Element) -> ())
     {
         if let n = n
         {
-            for _ in 0.stride(to: n, by: 1)
+            for _ in stride(from: 0, to: n, by: 1)
             {
                 forEach(block)
             }
@@ -56,25 +56,25 @@ public extension SequenceType
     }
 }
 
-public extension SequenceType
+public extension Sequence
 {
     ///Return true iff **any** of the elements in self satisfies `predicate`
-    @warn_unused_result
-    func any(@noescape predicate: (Self.Generator.Element) throws -> Bool) rethrows -> Bool
+    
+    func any(predicate: (Self.Iterator.Element) throws -> Bool) rethrows -> Bool
     {
-        return try contains(predicate)
+        return try contains(where: predicate)
     }
     
     ///Return true iff **none** of the elements in self satisfies `predicate`
-    @warn_unused_result
-    func none(@noescape predicate: (Self.Generator.Element) throws -> Bool) rethrows -> Bool
+    
+    func none(predicate: (Self.Iterator.Element) throws -> Bool) rethrows -> Bool
     {
         return try any{ try !predicate($0) }
     }
     
     ///Return true iff **all** the elements in self satisfies `predicate`
-    @warn_unused_result
-    func all(@noescape predicate: (Generator.Element) throws -> Bool) rethrows -> Bool
+    
+    func all(predicate: (Iterator.Element) throws -> Bool) rethrows -> Bool
     {
         return try !any{ try !predicate($0) }
     }
@@ -86,7 +86,7 @@ public extension SequenceType
      - parameter exclude: Function invoked to test elements for the exclusion from the array
      - returns: self filtered
      */
-    @warn_unused_result func reject(@noescape excludeElement: (Self.Generator.Element) throws -> Bool) rethrows -> [Self.Generator.Element]
+    func reject(excludeElement: (Self.Iterator.Element) throws -> Bool) rethrows -> [Self.Iterator.Element]
     {
         return try filter { return try !excludeElement($0) }
     }
@@ -97,7 +97,7 @@ public extension SequenceType
      - Parameter transform: closure to apply to elements in the array
      - Returns: the set compiled from the results of calling *transform* on each element in array
      */
-    func mapToSet<E:Hashable>(@noescape transform: Generator.Element -> E?) -> Set<E>
+    func mapToSet<E:Hashable>(_ transform: (Iterator.Element) -> E?) -> Set<E>
     {
         return Set(flatMap(transform))
     }
@@ -109,7 +109,7 @@ public extension SequenceType
      
      - returns: the number of elements accepted by `predicate`
      */
-    func count(@noescape predicate: Generator.Element throws -> Bool) rethrows -> Int
+    func count(_ predicate: (Iterator.Element) throws -> Bool) rethrows -> Int
     {
         return try filter(predicate).count
     }
@@ -121,11 +121,11 @@ public extension SequenceType
      
      Iterations continues until the closure returns **false**
      */
-    func iterate(@noescape closure: ((element: Generator.Element) -> Bool))
+    func iterate(_ closure: ((_ element: Iterator.Element) -> Bool))
     {
         for element in self
         {
-            if closure(element: element) { break }
+            if closure(element) { break }
         }
     }
     
@@ -135,8 +135,8 @@ public extension SequenceType
      - parameter condition: A closure which takes an Element and returns a Bool
      - returns: First element to match contidion or nil, if none matched
      */
-    @warn_unused_result
-    func find(@noescape condition: Generator.Element -> Bool) -> Generator.Element?
+    
+    func find(_ condition: (Iterator.Element) -> Bool) -> Iterator.Element?
     {
         for element in self
         {
@@ -152,15 +152,15 @@ public extension SequenceType
      - parameter type: A type to look for
      - returns: First element to match the type or nil, if none did
      */
-    @warn_unused_result
-    func find<T>(type: T.Type) -> T?
+    
+    func find<T>(_ type: T.Type) -> T?
     {
         return find({$0 is T}) as? T
     }
     
     /// Return an `Array` contisting of the members of `self`, that are `T`s
-    @warn_unused_result
-    func cast<T>(type: T.Type) -> Array<T>
+    
+    func cast<T>(_ type: T.Type) -> Array<T>
     {
         return flatMap { $0 as? T }
     }
@@ -168,20 +168,20 @@ public extension SequenceType
 
 // MARK: - Iterate
 
-public extension SequenceType
+public extension Sequence
 {
     /**
      Iterates on each element of the array.
      
      - parameter closure: Function to call for each index x element, setting the stop parameter to true will stop the iteration
      */
-    public func iterate(closure: ((index: Int, element: Generator.Element, inout stop: Bool) -> ()))
+    public func iterate(_ closure: ((_ index: Int, _ element: Iterator.Element, _ stop: inout Bool) -> ()))
     {
         var stop : Bool = false
         
-        for (index, element) in enumerate()
+        for (index, element) in enumerated()
         {
-            closure(index: index, element: element, stop: &stop)
+            closure(index, element, &stop)
             
             if stop { break }
         }
@@ -192,13 +192,13 @@ public extension SequenceType
      
      - parameter call: Function to call for each element
      */
-    public func iterate(closure: ((element: Generator.Element, inout stop: Bool) -> ()))
+    public func iterate(_ closure: ((_ element: Iterator.Element, _ stop: inout Bool) -> ()))
     {
         var stop : Bool = false
         
         for element in self
         {
-            closure(element: element, stop: &stop)
+            closure(element, &stop)
             
             if stop { break }
         }
@@ -207,11 +207,11 @@ public extension SequenceType
 }
 
 
-public extension SequenceType where Generator.Element: Hashable
+public extension Sequence where Iterator.Element: Hashable
 {
-    var uniques: [Generator.Element]
+    var uniques: [Iterator.Element]
     {
-        var added = Set<Generator.Element>()
+        var added = Set<Iterator.Element>()
         
         return filter {
             if added.contains($0) { return false }
@@ -226,27 +226,27 @@ public extension SequenceType where Generator.Element: Hashable
      
      - returns: **true** if the two sequences share any elements
      */
-    @warn_unused_result
-    func intersects<S : SequenceType where S.Generator.Element == Generator.Element>(sequence: S?) -> Bool
+    
+    func intersects<S : Sequence>(_ sequence: S?) -> Bool where S.Iterator.Element == Iterator.Element
     {
-        return sequence?.contains({ contains($0) }) ?? false
+        return sequence?.contains(where: { contains($0) }) ?? false
     }
 }
 
-extension SequenceType where Generator.Element == String
+extension Sequence where Iterator.Element == String
 {
-    @warn_unused_result
-    public func joinedWithSeparator(separator: String, prefix: String, suffix: String) -> String
+    
+    public func joinedWithSeparator(_ separator: String, prefix: String, suffix: String) -> String
     {
-        return map{ prefix + $0 + suffix }.joinWithSeparator(separator)
+        return map{ prefix + $0 + suffix }.joined(separator: separator)
     }
 }
 
-extension SequenceType where Generator.Element : CustomDebugStringConvertible
+extension Sequence where Iterator.Element : CustomDebugStringConvertible
 {
-    public func debugDescription(separator: String, prefix: String, suffix: String = "") -> String
+    public func debugDescription(_ separator: String, prefix: String, suffix: String = "") -> String
     {
-        return map{ prefix + $0.debugDescription + suffix }.joinWithSeparator(separator)
+        return map{ prefix + $0.debugDescription + suffix }.joined(separator: separator)
     }
     
     //    @warn_unused_result
@@ -256,11 +256,11 @@ extension SequenceType where Generator.Element : CustomDebugStringConvertible
     //    }
 }
 
-extension SequenceType where Generator.Element: Comparable
+extension Sequence where Iterator.Element: Comparable
 {
-    public func span() -> (Generator.Element, Generator.Element)?
+    public func span() -> (Iterator.Element, Iterator.Element)?
     {
-        if let mi = minElement(), let ma = maxElement()
+        if let mi = self.min(), let ma = self.max()
         {
             return (mi, ma)
         }
@@ -269,14 +269,14 @@ extension SequenceType where Generator.Element: Comparable
     }
 }
 
-extension SequenceType where Generator.Element: Hashable
+extension Sequence where Iterator.Element: Hashable
 {
-    public func frequencies() -> [(element: Generator.Element, frequency: Int)]
+    public func frequencies() -> [(element: Iterator.Element, frequency: Int)]
     {
-        var frequency =  Dictionary<Generator.Element,Int>()
+        var frequency =  Dictionary<Iterator.Element,Int>()
         
         forEach { frequency[$0] = (frequency[$0] ?? 0) + 1 }
         
-        return frequency.map{($0.0, $0.1)}.sort{ $0.1 > $1.1 }
+        return frequency.map{($0.0, $0.1)}.sorted{ $0.1 > $1.1 }
     }
 }

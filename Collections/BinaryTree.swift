@@ -10,25 +10,25 @@ import Foundation
 
 /// CAVEAT: Unfinished
 
-public class TreeNode<T>
+open class TreeNode<T>
 {
-    public var value: T
+    open var value: T
     
-    public var parent: TreeNode?
-    public var children = [TreeNode<T>]()
+    open var parent: TreeNode?
+    open var children = [TreeNode<T>]()
     
     public init(value: T)
     {
         self.value = value
     }
     
-    public func addChild(node: TreeNode<T>)
+    open func addChild(_ node: TreeNode<T>)
     {
         children.append(node)
         node.parent = self
     }
     
-    public func addValueAsChild(value: T) -> TreeNode<T>
+    open func addValueAsChild(_ value: T) -> TreeNode<T>
     {
         let node = TreeNode(value: value)
         
@@ -39,9 +39,9 @@ public class TreeNode<T>
     }
 }
 
-public class Tree<T>
+open class Tree<T>
 {
-    private let root : TreeNode<T>
+    fileprivate let root : TreeNode<T>
     
     init(root: TreeNode<T>)
     {
@@ -49,30 +49,30 @@ public class Tree<T>
     }
 }
 
-public class BinaryTree<T> : Tree<T>
+open class BinaryTree<T> : Tree<T>
 {
 
 }
 
-public class BinarySearchTree<T>
+open class BinarySearchTree<T>
 {
-    private let comparator : (T, T) -> Bool
+    fileprivate let comparator : (T, T) -> Bool
     
-    private(set) public var value: T
+    fileprivate(set) open var value: T
     
-    private(set) public var parent: BinarySearchTree?
+    fileprivate(set) open var parent: BinarySearchTree?
     
-    private(set) public var left: BinarySearchTree?
+    fileprivate(set) open var left: BinarySearchTree?
     
-    private(set) public var right: BinarySearchTree?
+    fileprivate(set) open var right: BinarySearchTree?
     
-    public init(value: T, comparator: (T, T) -> Bool)
+    public init(value: T, comparator: @escaping (T, T) -> Bool)
     {
         self.value = value
         self.comparator = comparator
     }
 
-    private init(value: T, parent: BinarySearchTree<T>)
+    fileprivate init(value: T, parent: BinarySearchTree<T>)
     {
         self.value = value
         self.parent = parent
@@ -80,11 +80,11 @@ public class BinarySearchTree<T>
     }
 
     
-    public func insert(value: T) {
+    open func insert(_ value: T) {
         insert(value, parent: self)
     }
     
-    private func insert(value: T, parent: BinarySearchTree)
+    fileprivate func insert(_ value: T, parent: BinarySearchTree)
     {
         if comparator(value, self.value)
         {

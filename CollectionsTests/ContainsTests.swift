@@ -25,9 +25,9 @@ class ContainsTests: XCTestCase
     {
         let sets = arrays.map({ Set($0) })
 
-        for (i, expectations_for_i) in expectations.enumerate()
+        for (i, expectations_for_i) in expectations.enumerated()
         {
-            for (j, expectation) in expectations_for_i.enumerate()
+            for (j, expectation) in expectations_for_i.enumerated()
             {
                 print("\(arrays[i]) should " + (expectation ? "":"NOT ") + "contain \(arrays[j])")
                 XCTAssertEqual(arrays[i].contains(arrays[j]), expectation)

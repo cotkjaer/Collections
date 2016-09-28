@@ -10,16 +10,16 @@
 *  Generator that "strides" through a sequence two elements at a time.
 */
 
-struct StrindingPairGenerator<T>: GeneratorType
+struct StrindingPairGenerator<T>: IteratorProtocol
 {
     typealias Element = (T, T?)
     
-    var arrayGenerator: Array<T>.Generator
+    var arrayGenerator: Array<T>.Iterator
     var arrayElement: T?
     
-    init<S: SequenceType where S.Generator.Element == T>(_ s: S)
+    init<S: Sequence>(_ s: S) where S.Iterator.Element == T
     {
-        arrayGenerator = Array(s).generate()
+        arrayGenerator = Array(s).makeIterator()
         arrayElement = arrayGenerator.next()
     }
     

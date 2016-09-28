@@ -131,7 +131,7 @@ class ArrayTests: XCTestCase
         XCTAssertEqual(array.prepend(1), 1)
         XCTAssertEqual(array,[1,2,4])
         
-        XCTAssertEqual(array.insert(3, atIndex: 2), 3)
+        XCTAssertEqual(array.insert(3, at: 2), 3)
         XCTAssertEqual(array,[1,2,3,4])
     }
     

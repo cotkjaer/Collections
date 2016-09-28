@@ -14,7 +14,7 @@ class HeapTests: XCTestCase
 {
     func elements() -> Array<(Int, Float)>
     {
-        return 0.stride(to: 1000, by: 1).map({(random(), Float($0))})
+        return stride(from: 0, to: 1000, by: 1).map({(Int(arc4random()), Float($0))})
     }
     
     func test_init_heap()
@@ -57,7 +57,7 @@ class HeapTests: XCTestCase
         let elements = self.elements()
         
         var counter = 0
-        measureBlock
+        measure
             {
                 counter += 1
                 for e in elements
@@ -78,7 +78,7 @@ class HeapTests: XCTestCase
             heap.push(e)
         }
 
-        measureBlock
+        measure
             {
                 while !heap.isEmpty
                 {

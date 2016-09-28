@@ -18,6 +18,6 @@ class NSIndexSetTests: XCTestCase {
     
     func testIndicies()
     {
-        XCTAssertEqual(NSIndexSet(indexesInRange: NSMakeRange(10, 10)).indicies, Set(10,11,12,13,14,15,16,17,18,19))
+        XCTAssertEqual(NSIndexSet(indexesIn: NSMakeRange(10, 10)).indicies, Set(10,11,12,13,14,15,16,17,18,19))
     }
 }

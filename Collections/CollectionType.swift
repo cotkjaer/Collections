@@ -8,7 +8,7 @@
 
 // MARK: - Get
 
-public extension CollectionType
+public extension Collection where Index : Strideable
 {
     /**
      Gets the element at the specified (optional) index, if it exists and is within the collections bounds.
@@ -16,14 +16,13 @@ public extension CollectionType
      - parameter optionaleIndex: the optional index to look up
      - returns: the element at the index in `self`
      */
-    @warn_unused_result
-    func get(index: Index?) -> Generator.Element?
+    func get(_ index: Index?) -> Generator.Element?
     {
         guard let index = index else { return nil }
         
-        guard startIndex.distanceTo(index) >= 0 else { return nil }
+        guard startIndex.distance(to:index) >= 0 else { return nil }
         
-        guard index.distanceTo(endIndex) > 0 else { return nil }
+        guard index.distance(to:endIndex) > 0 else { return nil }
         
         return self[index]
     }
@@ -31,7 +30,7 @@ public extension CollectionType
 
 // MARK: - Find
 
-public extension CollectionType
+public extension Collection
 {
     /**
      Finds the first element which meets the condition.
@@ -39,40 +38,31 @@ public extension CollectionType
      - parameter condition: A closure which takes an Element and returns a Bool
      - returns: First element to match contidion or nil, if none matched
      */
-    @warn_unused_result
-    func find(@noescape condition: Generator.Element throws -> Bool) rethrows -> Generator.Element?
+    func find( condition: (Generator.Element) throws -> Bool) rethrows -> Generator.Element?
     {
-        if let index = try indexOf(condition)
+        if let index = try index(where: condition)
         {
             return self[index]
         }
         
         return nil
-        
-        //        for element in self
-        //        {
-        //            if try condition(element) { return element }
-        //        }
-        //        return nil
     }
 }
 
 // MARK: - Optional versions
 
-extension CollectionType where Generator.Element : Equatable
+extension Collection where Self.Iterator.Element : Equatable
 {
     ///Returns the first index where `optionalElement` appears in `self` or `nil` if `optionalElement` is not found.
-    @warn_unused_result
-    public func indexOf(optionalElement: Generator.Element?) -> Index?
+    public func index(of optionalElement: Generator.Element?) -> Index?
     {
         guard let element = optionalElement else { return nil }
         
-        return indexOf { $0 == element }
+        return index { $0 == element }
     }
     
     ///Returns the first element that is equal to `optionalElement` or `nil` if `optionalElement` is not found.
-    @warn_unused_result
-    public func find(optionalElement: Generator.Element?) -> Generator.Element?
+    public func find(_ optionalElement: Generator.Element?) -> Generator.Element?
     {
         guard let element = optionalElement else { return nil }
 
@@ -82,18 +72,17 @@ extension CollectionType where Generator.Element : Equatable
     // MARK: - Contains
 
     /// Returns `true` if all elements in `collection` are also in `self`, `false` otherwise
-    @warn_unused_result
-    public func contains<C : CollectionType where Generator.Element == C.Generator.Element>(optionalCollection: C?) -> Bool
+    public func contains<C : Collection>(_ optionalCollection: C?) -> Bool where Iterator.Element == C.Iterator.Element
     {
         guard let collection = optionalCollection else { return false }
         
-        return collection.all({ contains($0) })
+        return collection.all { contains($0) }
     }
 }
 
 // MARK: - at
 
-extension CollectionType
+extension Collection where Index : Strideable
 {
     /**
      Creates an array with the elements at the specified indexes.
@@ -101,7 +90,6 @@ extension CollectionType
      - parameter indexes: Indexes of the elements to get
      - returns: Array with the elements at indexes
      */
-    @warn_unused_result
     func at(indexes: Index...) -> Array<Generator.Element>
     {
         return indexes.flatMap { get($0) }
@@ -110,7 +98,7 @@ extension CollectionType
 
 // MARK: - Last Index
 
-public extension CollectionType
+public extension Collection where Index : Strideable
 {
     /**
      The collection's last valid read index, or `nil` if the collection is empty.
@@ -118,19 +106,18 @@ public extension CollectionType
      
      - Complexity: O(1)
      */
-    public var lastIndex : Index? { return isEmpty ?  nil : endIndex.advancedBy(-1) }
+    public var lastIndex : Index? { return isEmpty ?  nil : endIndex.advanced(by:-1) }
 }
 
 // MARK: - Uniques
 
-public extension CollectionType where Generator.Element : Equatable
+public extension Collection where Iterator.Element : Equatable
 {
     /**
      Constructs an array removing the duplicate values in `self`
      
      - returns: An Array of the unique values in `self`
      */
-    @warn_unused_result
     func uniques() -> Array<Generator.Element>
     {
         var result = Array<Generator.Element>()
@@ -147,7 +134,7 @@ public extension CollectionType where Generator.Element : Equatable
     }
 }
 
-extension CollectionType
+extension Collection
 {
     /**
      Returns an Array of elements for which call(element) is unique
@@ -155,10 +142,9 @@ extension CollectionType
      - parameter call: The closure to use to determine uniqueness
      - returns: The set of elements for which call(element) is unique
      */
-    @warn_unused_result
-    func uniquesBy<T: Equatable>(call: Generator.Element -> T) -> Array<Generator.Element>
+    func uniquesBy<T: Equatable>(call: (Iterator.Element) -> T) -> Array<Iterator.Element>
     {
-        var result = Array<Generator.Element>()
+        var result = Array<Iterator.Element>()
         var uniqueItems = Array<T>()
         
         for item in self

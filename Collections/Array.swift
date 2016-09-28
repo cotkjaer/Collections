@@ -13,7 +13,7 @@ import Foundation
 public extension Array
 {
     /// Init with elements produced by calling `block` `count` times.
-    init(count: Int, @noescape block: Int -> Element)
+    init(count: Int, block: (Int) -> Element)
     {
         self.init()
         
@@ -25,7 +25,7 @@ public extension Array
     
     /// Init with elements produced by calling `block` until it returns `nil`.
     /// -warning: Calls `block` until it returns nil
-    init(@noescape block: () -> Element?)
+    init(block: () -> Element?)
     {
         self.init()
         
@@ -47,7 +47,7 @@ public extension Array
      - Parameter transform: closure to apply to the elements in the array
      - Returns: the dictionary compiled from the results of calling *transform* on each element in array
      */
-    func mapToDictionary<K:Hashable, V>(@noescape transform: (Element) -> (K, V)?) -> Dictionary<K, V>
+    func mapToDictionary<K:Hashable, V>(_ transform: (Element) -> (K, V)?) -> Dictionary<K, V>
     {
         var d = Dictionary<K, V>()
         
@@ -65,14 +65,14 @@ public extension Array
 public extension Array
 {
     /// Removes the first element to match `predicate` from the array and returns the found element
-    @warn_unused_result
-    mutating func take(@noescape predicate: (Element throws -> Bool) = { $0 != nil }) rethrows -> Element?
+    
+    mutating func take(predicate: ((Element) throws -> Bool) = { _ in return true }) rethrows -> Element?
     {
-        if let index = try indexOf(predicate)
+        if let index = try index(where: predicate)
         {
             let element = self[index]
             
-            removeAtIndex(index)
+            remove(at: index)
             
             return element
         }
@@ -86,9 +86,9 @@ public extension Array
      - parameter n: Number of elements to take
      - returns: First n elements
      */
-    func take(n: Int) -> Array
+    func take(_ n: Int) -> Array
     {
-        return Array(self[0..<max(0, n)])
+        return Array(self[0..<Swift.max(0, n)])
     }
     
     /**
@@ -97,11 +97,11 @@ public extension Array
      - parameter condition: A function which returns a boolean if an element satisfies a given condition or not.
      - returns: Elements of the array up until an element does not meet the condition
      */
-    func takeWhile(condition: Element -> Bool) -> Array
+    func takeWhile(_ condition: (Element) -> Bool) -> Array
     {
         var lastTrue = -1
         
-        for (index, value) in self.enumerate()
+        for (index, value) in self.enumerated()
         {
             if condition(value)
             {
@@ -127,9 +127,9 @@ public extension Array
      
      - returns: subarray
      */
-    func upTill(include include: Bool = true, @noescape _ predicate: (Element -> Bool)) -> Array<Element>
+    func upTill(include: Bool = true, _ predicate: ((Element) -> Bool)) -> Array<Element>
     {
-        if let index = indexOf(predicate)
+        if let index = index(where: predicate)
         {
             if include
             {
@@ -157,10 +157,10 @@ public extension Array
      
      - returns: subarray
      */
-    @warn_unused_result
-    func stopFilter(include include: Bool = true, target: Bool = true, @noescape _ predicate: Element -> Bool) -> Array<Element>
+    
+    func stopFilter(include: Bool = true, target: Bool = true, _ predicate: (Element) -> Bool) -> Array<Element>
     {
-        if let index = indexOf({ predicate($0) == target })
+        if let index = index(where: { predicate($0) == target })
         {
             if include
             {
@@ -188,8 +188,8 @@ public extension Array
      - parameter predicate: the predicate to test elements
      - returns: The found index and element, or `nil` if there are no elements in the array for which the predicate returns `true`
      */
-    @warn_unused_result
-    public func lastWhere(@noescape predicate: Element -> Bool) -> (Int, Element)?
+    
+    public func lastWhere(_ predicate: (Element) -> Bool) -> (Int, Element)?
     {
         guard count > 0 else { return nil }
         
@@ -229,8 +229,8 @@ public extension Array
      - parameter predicate: the predicate to test elements
      - returns: the first index and element at that index, or nil if there are no elements for which the predicate returns true
      */
-    @warn_unused_result
-    public func firstWhere(@noescape predicate: Element -> Bool) -> (Int, Element)?
+    
+    public func firstWhere(_ predicate: (Element) -> Bool) -> (Int, Element)?
     {
         if count == 0
         {
@@ -271,7 +271,7 @@ public extension Array
      - parameter predicate: the predicate to test each element
      - returns: the min index and element at that index, or nil if there are no elements for which the predicate returns true
      */
-    public func bSearch(predicate: Element -> Bool) -> (Int, Element)?
+    public func bSearch(_ predicate: (Element) -> Bool) -> (Int, Element)?
     {
         if count == 0
         {
@@ -317,7 +317,7 @@ public extension Array
      - parameter block: the block to run each time
      - returns: an item (there could be multiple matches) for which the block returns true
      */
-    func bSearch (block: (Element) -> (Int)) -> Element?
+    func bSearch (_ block: (Element) -> (Int)) -> Element?
     {
         let match = bSearch
             {
@@ -354,7 +354,7 @@ public extension Array
      
      - parameter elements: The elements to append
      */
-    mutating func push(elements: Element...)
+    mutating func push(_ elements: Element...)
     {
         switch elements.count
         {
@@ -381,13 +381,13 @@ public extension Array
      
      - parameter elements: The elements to prepend
      */
-    mutating func unshift(elements: Element...)
+    mutating func unshift(_ elements: Element...)
     {
         switch elements.count
         {
         case 0: return
             
-        case 1: self.insert(elements[0], atIndex: 0)
+        case 1: self.insert(elements[0], at: 0)
             
         default: self = elements + self
         }
@@ -398,16 +398,16 @@ public extension Array
 
 public extension Array where Element : Equatable
 {
-    func missingIndicies(otherArray: Array<Element>) -> [Index]
+    func missingIndicies(_ otherArray: Array<Element>) -> [Index]
     {
-        return enumerate().filter{!otherArray.contains($0.element)}.map{$0.index}
+        return enumerated().filter{!otherArray.contains($0.element)}.map{ $0.offset }
     }
 }
 
 /**
 Add a optional array
 */
-infix operator ?+ { associativity left precedence 130 }
+infix operator ?+ : AdditionPrecedence //{ associativity left precedence 130 }
 
 public func ?+ <T> (first: [T], optionalSecond: [T]?) -> [T]
 {
@@ -421,9 +421,9 @@ public func ?+ <T> (first: [T], optionalSecond: [T]?) -> [T]
     }
 }
 
-infix operator ?+= { associativity right precedence 90 }
+infix operator ?+= : AdditionPrecedence // { associativity right precedence 90 }
 
-public func ?+= <T> (inout left: [T], optionalRight: [T]?)
+public func ?+= <T> (left: inout [T], optionalRight: [T]?)
 {
     if let right = optionalRight
     {

@@ -8,7 +8,7 @@
 
 struct List<Element>
 {
-    private var array: Array<Element>
+    fileprivate var array: Array<Element>
     
     var count : Int { return array.count }
     
@@ -40,7 +40,7 @@ private class Link<E>
         self.element = element
     }
     
-    func append(element: E) -> Link<E>
+    func append(_ element: E) -> Link<E>
     {
         let link = Link(element: element)
         
@@ -50,7 +50,7 @@ private class Link<E>
         return link
     }
     
-    func prepend(element: E) -> Link<E>
+    func prepend(_ element: E) -> Link<E>
     {
         let link = Link(element: element)
         
@@ -63,10 +63,10 @@ private class Link<E>
 
 public struct LinkedList<Element>
 {
-    private var array = Array<Element>()
+    fileprivate var array = Array<Element>()
     
-    private var head: Link<Element>?
-    private var tail: Link<Element>?
+    fileprivate var head: Link<Element>?
+    fileprivate var tail: Link<Element>?
     
     var isEmpty : Bool { return head == nil && tail == nil }
     
@@ -106,7 +106,7 @@ public struct LinkedList<Element>
         return nil
     }
     
-    mutating func append(element: Element)
+    mutating func append(_ element: Element)
     {
         if isEmpty
         {
@@ -121,7 +121,7 @@ public struct LinkedList<Element>
         }
     }
     
-    mutating func prepend(element: Element)
+    mutating func prepend(_ element: Element)
     {
         if isEmpty
         {
@@ -136,7 +136,7 @@ public struct LinkedList<Element>
         }
     }
     
-    public func contains(check: Element -> Bool) -> Bool
+    public func contains(_ check: (Element) -> Bool) -> Bool
     {
         var link = head
         
@@ -162,7 +162,7 @@ public struct LinkedList<Element>
 
 extension LinkedList where Element : Equatable
 {
-    public func contains(element: Element) -> Bool
+    public func contains(_ element: Element) -> Bool
     {
         return contains({ $0 == element })
     }

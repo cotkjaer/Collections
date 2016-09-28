@@ -6,30 +6,30 @@
 //  Copyright © 2015 Christian Otkjær. All rights reserved.
 //
 
-public class Queue<Element>
+open class Queue<Element>
 {
-    private var linkedList = LinkedList<Element>()
+    fileprivate var linkedList = LinkedList<Element>()
     
-    public func enqueue(element: Element)
+    open func enqueue(_ element: Element)
     {
         linkedList.append(element)
     }
     
-    public func dequeue() -> Element?
+    open func dequeue() -> Element?
     {
         return linkedList.popFirst()
     }
 
-    public var isEmpty : Bool { return linkedList.isEmpty }
+    open var isEmpty : Bool { return linkedList.isEmpty }
     
-    public var count: Int { return linkedList.count }
+    open var count: Int { return linkedList.count }
 }
 
 // MARK: - Contains
 
 extension Queue where Element : Equatable
 {
-    public func contains(element: Element) -> Bool
+    public func contains(_ element: Element) -> Bool
     {
         return linkedList.contains(element)
     }

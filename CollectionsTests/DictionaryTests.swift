@@ -45,15 +45,15 @@ class DictionaryTests: XCTestCase
     {
         let d = Dictionary([(1, "A"),(2, "BB"), (3, "CCC")])
         
-        XCTAssertEqual(d.filterPairs({$0.key > 2}).count, 1)
-        XCTAssertEqual(d.filterPairs({$0.value < "C"}).count, 2)
+        XCTAssertEqual(d.filterPairs{$0.key > 2}.count, 1)
+        XCTAssertEqual(d.filterPairs{$0.value < "C"}.count, 2)
     }
     
     func test_map()
     {
         let d = Dictionary([(1, "A"),(2, "BB"), (3, "CCC")])
         
-        let i = d.map({$0.characters.count})
+        let i = d.map {$0.characters.count}
         
         XCTAssertEqual(i.count, 3)
         XCTAssertEqual(i[2], 2)
@@ -66,7 +66,7 @@ class DictionaryTests: XCTestCase
         XCTAssertEqual(d.count, 3)
         XCTAssertNotNil(d[3])
 
-        let i = d.flatMap({ $0.characters.count > 2 ? nil : $0 })
+        let i = d.flatMap { $0.characters.count > 2 ? nil : $0 }
         
         XCTAssertEqual(i.count, 2)
         XCTAssertNil(i[3])

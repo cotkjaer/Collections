@@ -10,7 +10,7 @@ import Foundation
 
 public struct Heap<Element>
 {
-    public init<S: SequenceType where S.Generator.Element == Element>(elements: S, isOrderedBefore: (Element, Element) -> Bool)
+    public init<S: Sequence>(elements: S, isOrderedBefore: @escaping (Element, Element) -> Bool) where S.Iterator.Element == Element
     {
         self.isOrderedBefore = isOrderedBefore
         for e in elements
@@ -19,7 +19,7 @@ public struct Heap<Element>
         }
     }
     
-    public init(isOrderedBefore: (Element, Element) -> Bool)
+    public init(isOrderedBefore: @escaping (Element, Element) -> Bool)
     {
         self.isOrderedBefore = isOrderedBefore
     }
@@ -29,7 +29,7 @@ public struct Heap<Element>
     public var isEmpty : Bool { return heap.isEmpty }
     
     /// Push a new `element` onto the heap
-    public mutating func push(element: Element)
+    public mutating func push(_ element: Element)
     {
         // use only append() and removeLast(), as they are MUCH faster than any other Array insert/remove
         heap.append(element)
@@ -38,14 +38,14 @@ public struct Heap<Element>
     }
     
     /// Peek at the top of the heap (the smallest (by isOrderedBefore) element)
-    @warn_unused_result
+    
     public func peek() -> Element?
     {
         return heap.first
     }
     
     /// Remove the top of the heap (the smallest (by isOrderedBefore) element)
-    @warn_unused_result
+    
     public mutating func pop() -> Element?
     {
         let result : Element?
@@ -74,20 +74,20 @@ public struct Heap<Element>
     // MARK: - Private
     
     // The actual heap of elements
-    private var heap = Array<Element>()
+    fileprivate var heap = Array<Element>()
     
     // The less-than closure
-    private let isOrderedBefore : (Element, Element) -> Bool
+    fileprivate let isOrderedBefore : (Element, Element) -> Bool
     
     
-    private func parentIndexForChildIndex(childIndex: Int) -> Int?
+    fileprivate func parentIndexForChildIndex(_ childIndex: Int) -> Int?
     {
         guard childIndex > 0 else { return nil }
         
         return (childIndex - 1) / 2 //Int(floor((Float(childIndex) - 1) / 2))
     }
     
-    private func childIndexForLeastChild(parentIndex: Int) -> Int?
+    fileprivate func childIndexForLeastChild(_ parentIndex: Int) -> Int?
     {
         var childIndex : Int?
         
@@ -112,7 +112,7 @@ public struct Heap<Element>
     }
     
     /// Moves the top of the heap "down" to its proper position
-    private mutating func siftDown()
+    fileprivate mutating func siftDown()
     {
         guard heap.endIndex > 1 else { return }
         
@@ -129,7 +129,7 @@ public struct Heap<Element>
     }
     
     // Moves the bottom/last element "up" through the heap to its proper position
-    private mutating func siftUp()
+    fileprivate mutating func siftUp()
     {
         guard heap.endIndex > 1 else { return }
         
@@ -155,7 +155,7 @@ extension Heap where Element : Comparable
         self.init(isOrderedBefore: <)
     }
     
-    public init<S: SequenceType where S.Generator.Element == Element>(elements: S)
+    public init<S: Sequence>(elements: S) where S.Iterator.Element == Element
     {
         self.init(elements: elements, isOrderedBefore: <)
     }
