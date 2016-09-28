@@ -8,6 +8,20 @@
 
 import Foundation
 
+//MARK: - OptionalEquality
+
+extension IndexSet
+{
+    public init<S:Sequence>(indicies: S) where S.Iterator.Element == Int
+    {
+        self.init()
+        
+        for i in indicies
+        {
+            insert(i)
+        }
+    }
+}
 
 extension NSIndexSet
 {
