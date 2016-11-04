@@ -12,24 +12,40 @@ import Foundation
 
 public extension Array
 {
-    /// Init with elements produced by calling `block` `count` times.
-    init(count: Int, block: (Int) -> Element)
+    /// Init with elements produced by calling `closure` `count` times.
+    /// - parameter closure : The factory code, gets invoked with integers from `0..<count`
+    /// - parameter count : number of times to invoke the factory code
+    public init(repeating closure: (Int) -> Element, count: Int)
+    {
+        self = (0..<count).map(closure)
+    }
+    
+    /// Init with elements produced by calling `closure` `count` times.
+    /// - parameter closure : The factory code
+    /// - parameter count : number of times to invoke the factory code
+    public init(repeating closure: () -> Element, count: Int)
+    {
+        self = (0..<count).map { _ in closure() }
+    }
+    
+    /// Init with elements produced by calling `closure` `count` times.
+    @available(*, deprecated) init(count: Int, closure: (Int) -> Element)
     {
         self.init()
         
         for i in 0..<count
         {
-            append(block(i))
+            append(closure(i))
         }
     }
     
-    /// Init with elements produced by calling `block` until it returns `nil`.
-    /// -warning: Calls `block` until it returns nil
-    init(block: () -> Element?)
+    /// Init with elements produced by calling `closure` until it returns `nil`.
+    /// - warning: Calls `closure` until it returns nil, if closure never does, the code hangs
+    init(closure: () -> Element?)
     {
         self.init()
         
-        while let e = block()
+        while let e = closure()
         {
             append(e)
         }
@@ -54,7 +70,7 @@ public extension Array
         forEach { (e) in
             if let (k, v) = transform(e) { d[k] = v }
         }
-
+        
         return d
     }
 }
@@ -305,8 +321,8 @@ public extension Array
     }
     
     /**
-     Runs a binary search to find some element for which the block returns 0.
-     The block should return a negative number if the current value is before the target in the array, 0 if it's the target, and a positive number if it's after the target
+     Runs a binary search to find some element for which the closure returns 0.
+     The closure should return a negative number if the current value is before the target in the array, 0 if it's the target, and a positive number if it's after the target
      The Spaceship operator is a perfect fit for this operation, e.g. if you want to find the object with a specific date and name property, you could keep the array sorted by date first, then name, and use this call:
      let match = bSearch
      {
@@ -314,19 +330,19 @@ public extension Array
      
      See http://ruby-doc.org/core-2.2.0/Array.html#method-i-bsearch regarding find-any mode for more
      
-     - parameter block: the block to run each time
-     - returns: an item (there could be multiple matches) for which the block returns true
+     - parameter closure: the closure to run each time
+     - returns: an item (there could be multiple matches) for which the closure returns true
      */
-    func bSearch (_ block: (Element) -> (Int)) -> Element?
+    func bSearch (_ closure: (Element) -> (Int)) -> Element?
     {
         let match = bSearch
             {
                 item in
-                block(item) >= 0
+                closure(item) >= 0
         }
         if let (_, element) = match
         {
-            return block(element) == 0 ? element : nil
+            return closure(element) == 0 ? element : nil
         }
         else
         {
@@ -405,8 +421,8 @@ public extension Array where Element : Equatable
 }
 
 /**
-Add a optional array
-*/
+ Add a optional array
+ */
 infix operator ?+ : AdditionPrecedence //{ associativity left precedence 130 }
 
 public func ?+ <T> (first: [T], optionalSecond: [T]?) -> [T]

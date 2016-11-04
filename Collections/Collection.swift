@@ -6,6 +6,8 @@
 //  Copyright © 2016 Christian Otkjær. All rights reserved.
 //
 
+
+
 // MARK: - Get
 
 public extension Collection where Index : Strideable
