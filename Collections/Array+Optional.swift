@@ -12,10 +12,5 @@ import Foundation
 
 extension Array
 {
-    public func append(element : Element?)
-    {
-        guard let element = element else { return }
-        
-        append(element: element)
-    }
+
 }

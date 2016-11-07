@@ -56,7 +56,7 @@ class SetTests: XCTestCase
         
         XCTAssert(type(of: setABC) == type(of: setBC))
         
-        let mapped = setABC.map({ $0 as? C })
+        let mapped = setABC.map { $0 as? C }
         
         XCTAssert(type(of: mapped) == Set<C>.self)
         
@@ -76,10 +76,9 @@ class SetTests: XCTestCase
         
         XCTAssert(type(of: filteredForC) == type(of: setABC))
         
-        XCTAssertEqual(filteredForC, setBC.sift({ $0 is C }))
+        XCTAssertEqual(filteredForC, setBC.sift { $0 is C })
         XCTAssertEqual(setBC.filter({ $0.hashValue == 1 }).count, 0)
     }
-    
     
     func testUnion()
     {

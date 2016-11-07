@@ -11,7 +11,7 @@ import Foundation
 extension Set
 {
     /// Return a `Set` contisting of the members of `self`, that are `T`s
-    func cast<T:Hashable>(_ type: T.Type) -> Set<T>
+    public func cast<T:Hashable>(_ type: T.Type) -> Set<T>
     {
         return map { $0 as? T }
     }

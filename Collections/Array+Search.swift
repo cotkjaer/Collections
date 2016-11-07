@@ -10,6 +10,49 @@ import Foundation
 
 extension Array
 {
+    
+    /**
+     Does a binary search to find the **last** element for which the predicate evaluates to `true`.
+     
+     The predicate should return `true` for all elements in the array below a certain index and `false` for all elements above that index
+     
+     - parameter predicate: the predicate to test elements
+     - returns: The found index and element, or `nil` if there are no elements in the array for which the predicate returns `true`
+     */
+    
+    public func last(where predicate: (Element) -> Bool) -> (Int, Element)?
+    {
+        guard count > 0 else { return nil }
+        
+        var low = 0
+        var high = count - 1
+        
+        while low <= high
+        {
+            let mid = (high + low) / 2
+            
+            if predicate(self[mid])
+            {
+                if mid == high || !predicate(self[mid + 1])
+                {
+                    return (mid, self[mid])
+                }
+                else
+                {
+                    low = mid + 1
+                }
+            }
+            else
+            {
+                high = mid - 1
+            }
+        }
+        
+        return nil
+    }
+
+    
+
     /**
      Does a binary search to find the smallest/first element for which the predicate evaluates to true.
      - Note: The predicate should return true for all elements in the array above a certain index and false for all elements below that index

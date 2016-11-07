@@ -25,11 +25,11 @@ class ArrayTests: XCTestCase
     }
     
 
-    func testFirstWhere()
+    func test_search()
     {
         let array = Array(arrayLiteral: 1,2,3,4,4,4,5,6,7,7,7,8,10)
         
-        if let (index, number) = array.firstWhere( { $0 > 4 } )
+        if let (index, number) = array.search( { $0 > 4 } )
         {
             XCTAssertEqual(number, 5)
             XCTAssertEqual(index, 6)
@@ -39,7 +39,7 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
         
-        if let (index, number) = array.firstWhere( { $0 > 7 } )
+        if let (index, number) = array.search( { $0 > 7 } )
         {
             XCTAssertEqual(number, 8)
             XCTAssertEqual(index, 11)
@@ -49,7 +49,7 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
         
-        if let (index, number) = array.firstWhere( { $0 > 0 } )
+        if let (index, number) = array.search( { $0 > 0 } )
         {
             XCTAssertEqual(number, 1)
             XCTAssertEqual(index, 0)
@@ -59,17 +59,17 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
         
-        if let (index, number) = array.firstWhere( { $0 > 10 } )
+        if let (index, number) = array.search( { $0 > 10 } )
         {
             XCTFail("found index \(index), element: \(number)")
         }
     }
     
-    func testLastWhere()
+    func test_last_where()
     {
         let array = Array(arrayLiteral: 1,2,3,4,4,4,5,6,7,7,7,8,10)
         
-        if let (index, number) = array.lastWhere( { $0 < 5 } )
+        if let (index, number) = array.last(where: { $0 < 5 } )
         {
             XCTAssertEqual(number, 4)
             XCTAssertEqual(index, 5)
@@ -79,7 +79,7 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
 
-        if let (index, number) = array.lastWhere( { $0 < 10 } )
+        if let (index, number) = array.last(where: { $0 < 10 } )
         {
             XCTAssertEqual(number, 8)
             XCTAssertEqual(index, 11)
@@ -89,7 +89,7 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
 
-        if let (index, number) = array.lastWhere( { $0 < 100 } )
+        if let (index, number) = array.last(where: { $0 < 100 } )
         {
             XCTAssertEqual(number, 10)
             XCTAssertEqual(index, 12)
@@ -99,7 +99,7 @@ class ArrayTests: XCTestCase
             XCTFail("nothing found")
         }
 
-        if let (index, number) = array.lastWhere( { $0 < 1 } )
+        if let (index, number) = array.last(where: { $0 < 1 } )
         {
             XCTFail("found index \(index), element: \(number)")
         }

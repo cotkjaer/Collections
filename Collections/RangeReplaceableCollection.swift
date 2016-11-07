@@ -50,6 +50,7 @@ public extension RangeReplaceableCollection
      - Complexity: O(`self.count`)
      - Returns: the inserted element iff it was inserted
      */
+    @discardableResult
     mutating func insert(_ optionalElement: Generator.Element?, at index: Self.Index) -> Generator.Element?
     {
         if let element = optionalElement
@@ -67,9 +68,10 @@ public extension RangeReplaceableCollection
      
      - returns: element iff it was prepended, nil otherwise
      */
-    mutating func prepend(_ element: Generator.Element?) -> Generator.Element?
+    @discardableResult
+    mutating func prepend(_ optionalElement: Generator.Element?) -> Generator.Element?
     {
-        return insert(element, at: startIndex)
+        return insert(optionalElement, at: startIndex)
     }
 
     /**
@@ -79,16 +81,9 @@ public extension RangeReplaceableCollection
      
      - returns: element iff it was appended, nil otherwise
      */
-    mutating func append(_ element: Generator.Element?) -> Generator.Element?
+    @discardableResult
+    mutating func append(_ optionalElement: Generator.Element?) -> Generator.Element?
     {
-        return insert(element, at: endIndex)
+        return insert(optionalElement, at: endIndex)
     }
-    
-//    /**
-//     The collection's last valid index, or nil if the collection is empty.
-//     a non-nil lastIndex is a valid argument to subscript, and is always reachable from startIndex by zero or more applications of successor()
-//     
-//     - Complexity: O(1)
-//     */
-//    public var lastIndex : Index? { return isEmpty ?  nil : endIndex.advancedBy(-1) }
 }

@@ -44,32 +44,30 @@ public extension Set
     }
 }
 
-// MARK: - Optionals
+// MARK: - map and filter
 
-public extension Set
+extension Set
 {
     /// Return a `Set` contisting of the non-nil results of applying `transform` to each member of `self`
-    func map<U:Hashable>(transform: (Element) -> U?) -> Set<U>
+    public func map<E:Hashable>(_ transform: (Element) -> E?) -> Set<E>
     {
-        return Set<U>(flatMap(transform))
+        return Set<E>(flatMap(transform))
     }
     
-    /// Remove all members in `self` that are satisfy the predicate
+    /// Remove all members in `self` that satisfy the predicate; the reverse of `filter`
     /// - parameter predicate : predicate to determine if the element should be removed
-    mutating func remove(predicate: (Element) -> Bool)
+    public mutating func reject(_ predicate: (Element) -> Bool)
     {
         subtract(filter(predicate))
     }
-
+    
     /// Construct a new set containing only the members that satisfy the predicate; filter for sets
     /// - parameter predicate : the predicate
     /// - Returns: A `Set` consisting of the members of `self`, that satisfy `predicate`
-    func sift(predicate: (Element) throws -> Bool) rethrows -> Set<Element>
+    public func sift(_ predicate: (Element) throws -> Bool) rethrows -> Set<Element>
     {
         return try Set(filter(predicate))
     }
-    
-   
 }
 
 // MARK: - Subsets
