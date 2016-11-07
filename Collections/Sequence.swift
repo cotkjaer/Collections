@@ -92,7 +92,9 @@ public extension Sequence
     }
     
     /**
-     Creates a set with an optional entry for every element in the array. Calls _transform_ in the same sequence as a *for-in loop* would. The returned non-nil results are accumulated to the resulting set
+     Creates a set with an optional entry for every element in this sequence. 
+     
+     - note: Calls `transform` in the same order as a *for-in loop* would. The returned non-nil results are accumulated to the resulting set
      
      - Parameter transform: closure to apply to elements in the array
      - Returns: the set compiled from the results of calling *transform* on each element in array
@@ -100,6 +102,25 @@ public extension Sequence
     func mapToSet<E:Hashable>(_ transform: (Iterator.Element) -> E?) -> Set<E>
     {
         return Set(flatMap(transform))
+    }
+    
+    /**
+     Creates a dictionary with an optional entry for every element in this sequence.
+     
+     - Note: Different calls to *transform* may yield the same *result-key*, the later call overwrites the value in the dictionary with its own *result-value*
+     
+     - Parameter transform: closure to apply to the elements in the sequence
+     - Returns: the dictionary compiled from the results of calling *transform* on each element in array
+     */
+    func mapToDictionary<K:Hashable, V>(_ transform: (Iterator.Element) -> (K, V)?) -> Dictionary<K, V>
+    {
+        var d = Dictionary<K, V>()
+        
+        forEach { (e) in
+            if let (k, v) = transform(e) { d[k] = v }
+        }
+        
+        return d
     }
     
     /**
@@ -171,7 +192,7 @@ public extension Sequence
 public extension Sequence
 {
     /**
-     Iterates on each element of the array.
+     Iterates on each element of the sequence.
      
      - parameter closure: Function to call for each index x element, setting the stop parameter to true will stop the iteration
      */
@@ -203,9 +224,7 @@ public extension Sequence
             if stop { break }
         }
     }
-    
 }
-
 
 public extension Sequence where Iterator.Element: Hashable
 {
@@ -235,7 +254,6 @@ public extension Sequence where Iterator.Element: Hashable
 
 extension Sequence where Iterator.Element == String
 {
-    
     public func joinedWithSeparator(_ separator: String, prefix: String, suffix: String) -> String
     {
         return map{ prefix + $0 + suffix }.joined(separator: separator)

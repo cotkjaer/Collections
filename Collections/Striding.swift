@@ -6,11 +6,8 @@
 //  Copyright © 2016 Christian Otkjær. All rights reserved.
 //
 
-/**
-*  Generator that "strides" through a sequence two elements at a time.
-*/
-
-struct StrindingPairGenerator<T>: IteratorProtocol
+///  Iterator that "strides" through a sequence two elements at a time.
+struct StrindingPairIterator<T>: IteratorProtocol
 {
     typealias Element = (T, T?)
     

@@ -10,217 +10,66 @@
 
 public extension Set
 {
-    /// Init with elements produced by calling `block`, `count`times.
-    init(count: Int, block: (Int) -> Element)
+    /// Init with elements produced by calling `closure` `count` times.
+    /// - parameter closure : The factory code, gets invoked with integers from `0..<count`
+    /// - parameter count : number of times to invoke `closure`
+    public init(repeating closure: (Int) -> Element, count: Int)
     {
         self.init()
         
-        for i in 0..<count
-        {
-            insert(block(i))
-        }
+        (0..<count).forEach{ self.insert(closure($0)) }
     }
     
-    /// Init with elements produced by calling `block` until it returns `nil`.
-    /// -warning: Calls `block` until it returns nil
-    init(block: () -> Element?)
+    /// Init with elements produced by calling `closure` `count` times.
+    /// - parameter closure : The factory code
+    /// - parameter count : number of times to invoke the `closure`
+    public init(repeating closure: () -> Element, count: Int)
     {
         self.init()
         
-        while let e = block()
+        (0..<count).forEach{ _ in self.insert(closure()) }
+    }
+    
+    /// Init with members produced by calling `closure` repeatedly, until it returns `nil`.
+    /// - parameter closure : the closure producing members
+    /// - warning: Calls `closure` until it returns nil
+    init(repeating closure: () -> Element?)
+    {
+        self.init()
+        
+        while let e = closure()
         {
             insert(e)
         }
     }
 }
 
-// MARK: - Operators
-
-public func - <T, S : Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
-{
-    return lhs.subtracting(rhs)
-}
-
-public func + <T, S : Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
-{
-    return lhs.union(rhs)
-}
-
-// MARK: - Operators with optional arguments
-
-public func + <T>(lhs: Set<T>?, rhs: T) -> Set<T>
-{
-    return Set(rhs).union(lhs)
-}
-
-public func + <T>(lhs: T, rhs: Set<T>?) -> Set<T>
-{
-    return rhs + lhs
-}
-
-public func += <T, S : Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
-{
-    guard let rhs = rhs else { return }
-
-    lhs = lhs + rhs
-}
-
-public func += <T>(lhs: inout Set<T>, rhs: T?)
-{
-    let _ = lhs.insert(rhs)
-}
-
-public func - <T, S : Sequence>(lhs: Set<T>, rhs: S?) -> Set<T> where S.Iterator.Element == T
-{
-    if let r = rhs
-    {
-        return lhs - r
-    }
-    
-    return lhs
-}
-
-
-public func - <T>(lhs: Set<T>, rhs: T?) -> Set<T>
-{
-    return lhs - Set(rhs)
-}
-
-public func -= <T, S : Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
-{
-    lhs.subtractInPlace(rhs)
-}
-
-public func -= <T>(lhs: inout Set<T>, rhs: T?)
-{
-    let _ = lhs.remove(rhs)
-}
-
-
-
 // MARK: - Optionals
 
 public extension Set
 {
-    /**
-     Initializes a set from the non-nil elements in `elements`
-     
-     - parameter elements: list of optional members for the set
-     */
-    init(_ elements: Element?...)
-    {
-        self.init(elements)
-    }
-    
-    init(_ optionalMembers: [Element?])
-    {
-        self.init(optionalMembers.flatMap{ $0 })
-    }
-    
-    init(_ optionalArray: [Element]?)
-    {
-        self.init(optionalArray ?? [])
-    }
-    
-    init(_ optionalArrayOfOptionalMembers: [Element?]?)
-    {
-        self.init(optionalArrayOfOptionalMembers ?? [])
-    }
-
-    func union<S : Sequence>(_ sequence: S?) -> Set<Element> where S.Iterator.Element == Element
-    {
-        if let s = sequence
-        {
-            return union(s)
-        }
-        
-        return self
-    }
-    
-    mutating func formUnion<S : Sequence>(_ sequence: S?) where S.Iterator.Element == Element
-    {
-        if let s = sequence
-        {
-            formUnion(s)
-        }
-    }
-
-    mutating func subtractInPlace<S : Sequence>(_ sequence: S?) where S.Iterator.Element == Element
-    {
-        if let s = sequence
-        {
-            subtract(s)
-        }
-    }
-
-    
-    /// Insert an optional element into the set
-    /// - returns: **true** if the element was inserted, **false** otherwise
-    mutating func insert(_ optionalElement: Element?) -> Bool
-    {
-        if let element = optionalElement
-        {
-            if !contains(element)
-            {
-                insert(element)
-                return true
-            }
-        }
-        
-        return false
-    }
-
-    /// Insert an optional element into the set
-    /// - returns: **true** if the element was inserted, **false** otherwise
-    mutating func remove(_ optionalElement: Element?) -> Element?
-    {
-        if let element = optionalElement
-        {
-            return remove(element)
-        }
-        
-        return nil
-    }
-
-    
     /// Return a `Set` contisting of the non-nil results of applying `transform` to each member of `self`
-    
-    func map<U:Hashable>(_ transform: (Element) -> U?) -> Set<U>
+    func map<U:Hashable>(transform: (Element) -> U?) -> Set<U>
     {
         return Set<U>(flatMap(transform))
     }
     
-    ///Remove all members in `self` that are accepted by the predicate
-    mutating func remove(_ predicate: (Element) -> Bool)
+    /// Remove all members in `self` that are satisfy the predicate
+    /// - parameter predicate : predicate to determine if the element should be removed
+    mutating func remove(predicate: (Element) -> Bool)
     {
         subtract(filter(predicate))
     }
-    
-    /// Return a `Set` contisting of the members of `self`, that satisfy the predicate `includeMember`.
-    
-    func sift(_ includeMember: (Element) throws -> Bool) rethrows -> Set<Element>
+
+    /// Construct a new set containing only the members that satisfy the predicate; filter for sets
+    /// - parameter predicate : the predicate
+    /// - Returns: A `Set` consisting of the members of `self`, that satisfy `predicate`
+    func sift(predicate: (Element) throws -> Bool) rethrows -> Set<Element>
     {
-        return try Set(filter(includeMember))
+        return try Set(filter(predicate))
     }
     
-    /// Return a `Set` contisting of the members of `self`, that are `T`s
-    
-    func cast<T:Hashable>(_ type: T.Type) -> Set<T>
-    {
-        return map{ $0 as? T }
-    }
-    
-    /// Returns **true** `optionalMember` is non-nil and contained in `self`, **false** otherwise.
-    
-    func contains(_ optionalMember: Element?) -> Bool
-    {
-        if let m = optionalMember
-        {
-            return contains(m)
-        }
-        return false
-        //optionalMember?.isIn(self) == true
-    }
+   
 }
 
 // MARK: - Subsets

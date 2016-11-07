@@ -6,18 +6,18 @@
 //  Copyright © 2016 Christian Otkjær. All rights reserved.
 //
 
-public extension RangeReplaceableCollection where Index : Strideable //where Index : Comparable
+public extension RangeReplaceableCollection where Index : Strideable
 {
     /**
      Sets the element at the specified optional index, if it exists and is within the collections bounds.
      
-     - parameter optionaleIndex: the optional index to look up
+     - parameter index: the optional index to look up
      - returns: the element at the index in `self`
      */
     
-    public mutating func set(element: Generator.Element?, at optionaleIndex: Index?) -> Generator.Element?
+    public mutating func set(element: Generator.Element?, at index: Index?) -> Generator.Element?
     {
-        guard let index = optionaleIndex else { return nil }
+        guard let index = index else { return nil }
         
         guard let element = element else { return nil }
         
