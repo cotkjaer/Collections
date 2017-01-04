@@ -13,7 +13,7 @@ class CollectionsTests: XCTestCase
 {
     func test_Queue()
     {
-        let queue = Queue<Int>()
+        var queue = Array<Int>()
 
         XCTAssertNil(queue.dequeue())
 
@@ -24,7 +24,9 @@ class CollectionsTests: XCTestCase
 
         queue.enqueue(1)
         queue.enqueue(2)
-        
+
+        XCTAssertEqual(queue.count, 2)
+
         XCTAssertEqual(queue.dequeue(), 1)
         XCTAssertEqual(queue.dequeue(), 2)
         XCTAssertNil(queue.dequeue())
@@ -33,6 +35,7 @@ class CollectionsTests: XCTestCase
         queue.enqueue(2)
         queue.enqueue(3)
         
+        XCTAssertEqual(queue.count, 3)
         XCTAssertEqual(queue.dequeue(), 1)
         
         queue.enqueue(1)

@@ -71,4 +71,21 @@ class DictionaryTests: XCTestCase
         XCTAssertEqual(i.count, 2)
         XCTAssertNil(i[3])
     }
+    
+    func test_get()
+    {
+        let d = Dictionary([(1, "A"),(2, "BB"), (3, "CCC")])
+
+        var key: Int? = nil
+        
+        XCTAssertNil(d.get(key))
+
+        key = 0
+        
+        XCTAssertNil(d.get(key))
+        
+        key = 2
+        
+        XCTAssertEqual(d.get(key), "BB")
+    }
 }

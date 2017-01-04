@@ -21,6 +21,25 @@ extension Dictionary
     }
 }
 
+// MARK: - Get
+
+extension Dictionary
+{
+    /**
+     Gets the value at the specified optional key, if it exists
+     
+     - parameter key: the optional key to look up
+     - returns: the value at the key in `self`
+     */
+    public func get(_ key: Key?) -> Value?
+    {
+        guard let key = key else { return nil }
+        
+        return self[key]
+    }
+}
+
+
 extension Dictionary
 {
     public func mapPairs<OutKey: Hashable, OutValue>(transform: (Element) throws -> (OutKey, OutValue)) rethrows -> Dictionary<OutKey, OutValue>
