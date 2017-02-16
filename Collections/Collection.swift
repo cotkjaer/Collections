@@ -6,27 +6,6 @@
 //  Copyright © 2016 Christian Otkjær. All rights reserved.
 //
 
-// MARK: - Find
-
-public extension Collection
-{
-    /**
-     Finds the first element which meets the condition.
-     
-     - parameter condition: A closure which takes an Element and returns a Bool
-     - returns: First element to match contidion or nil, if none matched
-     */
-    func find(condition: (Generator.Element) throws -> Bool) rethrows -> Generator.Element?
-    {
-        if let index = try index(where: condition)
-        {
-            return self[index]
-        }
-        
-        return nil
-    }
-}
-
 // MARK: - Optional versions
 
 extension Collection where Self.Iterator.Element : Equatable
@@ -40,11 +19,11 @@ extension Collection where Self.Iterator.Element : Equatable
     }
     
     ///Returns the first element that is equal to `optionalElement` or `nil` if `optionalElement` is not found.
-    public func find(_ optionalElement: Generator.Element?) -> Generator.Element?
+    public func first(_ optionalElement: Generator.Element?) -> Generator.Element?
     {
         guard let element = optionalElement else { return nil }
 
-        return find { $0 == element }
+        return first { $0 == element }
     }
 
     // MARK: - Contains

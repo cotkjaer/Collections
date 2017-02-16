@@ -11,6 +11,20 @@ import XCTest
 
 class CollectionsTests: XCTestCase
 {
+    func test_first()
+    {
+        let array = [1,2,3,4,5,6,7,9,1,2,1,2,1,1]
+        
+        XCTAssertEqual(array.first{ $0 > 7 }, 9)
+        
+        let b: Array<Any> = [Int(1), Double(2), Float(3), Float(1), [4,4]]
+        
+        let f: Float? = b.first()
+        
+        XCTAssertNotNil(f)
+        XCTAssertEqual(f, Float(3))
+    }
+    
     func test_Queue()
     {
         var queue = Array<Int>()

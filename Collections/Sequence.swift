@@ -151,32 +151,13 @@ public extension Sequence
     }
     
     /**
-     Finds the first element which meets the condition.
-     
-     - parameter condition: A closure which takes an Element and returns a Bool
-     - returns: First element to match contidion or nil, if none matched
-     */
-    
-    func find(_ condition: (Iterator.Element) -> Bool) -> Iterator.Element?
-    {
-        for element in self
-        {
-            if condition(element) { return element }
-        }
-        
-        return nil
-    }
-    
-    /**
      Finds and returns the first element of the specified type (cast as that type).
      
-     - parameter type: A type to look for
      - returns: First element to match the type or nil, if none did
      */
-    
-    func find<T>(_ type: T.Type) -> T?
+    func first<T>() -> T?
     {
-        return find({$0 is T}) as? T
+        return first(where: {$0 is T}) as? T
     }
     
     /// Return an `Array` contisting of the members of `self`, that are `T`s
