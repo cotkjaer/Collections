@@ -10,6 +10,20 @@ import XCTest
 
 class ArrayTests: XCTestCase
 {
+    func test_optional_init()
+    {
+        let a: Set<Int>? = nil
+        
+        XCTAssertNil(Array(optionalCollection: a))
+
+        
+        let b: Set<Int>? = Set<Int>(1,2,3,4)
+        
+        XCTAssertNotNil(Array(optionalCollection: b))
+        
+        XCTAssertEqual(Array(optionalCollection: b)?.count, b?.count)
+    }
+    
     func testChanges()
     {
         let a1 = ["a", "b", "c", "d"]
