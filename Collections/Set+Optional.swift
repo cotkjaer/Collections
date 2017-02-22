@@ -9,6 +9,11 @@
 import Foundation
 // MARK: - Optionals
 
+// MARK: - <#comment#>
+
+extension Set: NilTollerableCollection { }
+
+
 public extension Set
 {
     /**
@@ -18,24 +23,9 @@ public extension Set
      */
     public init(_ members: Element?...)
     {
-        self = Set(members)
+        self = Set(members.flatMap{$0})
     }
-    
-    public init(_ optionalMembers: [Element?])
-    {
-        self.init(optionalMembers.flatMap{ $0 })
-    }
-    
-    init(_ optionalArray: [Element]?)
-    {
-        self.init(optionalArray ?? [])
-    }
-    
-    init(_ optionalArrayOfOptionalMembers: [Element?]?)
-    {
-        self.init(optionalArrayOfOptionalMembers ?? [])
-    }
-    
+        
     func union<S : Sequence>(_ optionalSequence: S?) -> Set<Element> where S.Iterator.Element == Element
     {
         guard let sequence = optionalSequence else { return self }

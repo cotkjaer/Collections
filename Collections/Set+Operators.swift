@@ -56,7 +56,9 @@ public func - <T, S : Sequence>(lhs: Set<T>, rhs: S?) -> Set<T> where S.Iterator
 
 public func - <T>(lhs: Set<T>, rhs: T?) -> Set<T>
 {
-    return lhs - Set(rhs)
+    guard let rhs = rhs else { return lhs }
+    
+    return lhs - rhs
 }
 
 public func -= <T, S : Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T

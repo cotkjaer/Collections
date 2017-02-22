@@ -10,12 +10,4 @@ import Foundation
 
 // MARK: - Optional
 
-extension Array
-{
-    public init?<C: Collection>(optionalCollection: C?) where C.Iterator.Element == Element
-    {
-        guard let collection = optionalCollection else { return nil }
-        
-        self.init(collection)
-    }
-}
+extension Array: NilTollerableCollection { }

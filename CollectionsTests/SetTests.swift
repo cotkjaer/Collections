@@ -32,7 +32,7 @@ class SetTests: XCTestCase
     let set0 = Set<Int>()
     let set1 = Set(1)
     let set23 = Set(2, 3)
-    let set123 = Set("1","2",nil,"3", "1")
+    let set123 = Set("1", "2", nil, "3", "1")
     
     func testListInit()
     {
@@ -134,7 +134,7 @@ class SetTests: XCTestCase
         let expectedSubsets = Set(set1, set2, set3, set12, set13, set23)
         
         XCTAssertEqual(set123.subsets().count, 6)
-        
+
         XCTAssertEqual(set123.subsets(), expectedSubsets)
         
         XCTAssertEqual(set12.subsets().count, 2)

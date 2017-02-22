@@ -7,21 +7,28 @@
 //
 
 import XCTest
+@testable import Collections
 
 class ArrayTests: XCTestCase
 {
     func test_optional_init()
     {
+        let s = Array(literalOptionals: 1,2)
+        
         let a: Set<Int>? = nil
         
-        XCTAssertNil(Array(optionalCollection: a))
+        let A = a?.flatMap({$0})//Array?(optionals: a) as [Int]?
+        
+        XCTAssertNil(A)
 
+        let b: Set<Int>? = Set<Int>(arrayLiteral: 1,2,3,4)
+        /*
+        Array<Int>(optionals: b)
         
-        let b: Set<Int>? = Set<Int>(1,2,3,4)
+        XCTAssertNotNil(Array(optionals: b))
         
-        XCTAssertNotNil(Array(optionalCollection: b))
-        
-        XCTAssertEqual(Array(optionalCollection: b)?.count, b?.count)
+        XCTAssertEqual(Array(optionals: b).count, b?.count)
+ */
     }
     
     func testChanges()

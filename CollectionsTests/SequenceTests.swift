@@ -23,7 +23,7 @@ class SequenceTypeTests: XCTestCase {
     
     func test_cycle()
     {
-        let set = Set(1,2,3)
+        let set = Set(arrayLiteral: 1,2,3)
         
         var counter = 0
         
@@ -34,7 +34,7 @@ class SequenceTypeTests: XCTestCase {
 
     func test_min_max()
     {
-        let set = Set(1,2,3)
+        let set = Set(arrayLiteral: 1,2,3)
         
         XCTAssertEqual(min(set), 1)
         XCTAssertEqual(max(set), 3)
@@ -62,7 +62,7 @@ class SequenceTypeTests: XCTestCase {
             return string.characters.count
         }
         
-        let strings = Set("sup'", "hello", "hi", "how do you do?")
+        let strings = Set(arrayLiteral: "sup'", "hello", "hi", "how do you do?")
         
         XCTAssertEqual(max(strings, isOrderedBefore: { characterCount($0) < characterCount($1)}), "how do you do?")
         XCTAssertEqual(min(strings, isOrderedBefore: { characterCount($0) < characterCount($1)}), "hi")

@@ -74,28 +74,25 @@ extension Set
 
 public extension Set
 {
-    /// Returns **all** the subsets of this set. That might be quite a lot!
-    
+    /** Creates a set of the strict subsets of this set (save the empty set)
+    - note: That might be quite a lot!
+    */
     func subsets() -> Set<Set<Element>>
     {
-        var subsets = Set<Set<Element>>()
+        guard count > 1 else { return Set<Set<Element>>() }
         
-        if count > 1
+        var rest = self
+        let element = rest.removeFirst()
+
+        var subsets = Set<Set<Element>>()
+
+        subsets.insert(Set(element))
+        subsets.insert(rest)
+        
+        for set in rest.subsets()
         {
-            if let element = first
-            {
-                subsets.insert(Set<Element>(element))
-                
-                let rest = self - element
-                
-                subsets.insert(rest)
-                
-                for set in rest.subsets()
-                {
-                    subsets.insert(set)
-                    subsets.insert(set + element)
-                }
-            }
+            subsets.insert(set)
+            subsets.insert(set + element)
         }
         
         return subsets
