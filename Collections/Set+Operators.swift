@@ -70,3 +70,21 @@ public func -= <T>(lhs: inout Set<T>, rhs: T?)
 {
     let _ = lhs.remove(rhs)
 }
+
+
+// MARK: - Closures for removing
+
+
+public func - <T>(lhs: Set<T>, rhs: ((T)->Bool)?) -> Set<T>
+{
+    guard let rhs = rhs else { return lhs }
+    
+    return lhs.removing(where: rhs)
+}
+
+public func -= <T>(lhs: inout Set<T>, rhs: ((T)->Bool)?)
+{
+    guard let rhs = rhs else { return }
+
+    lhs.remove(where: rhs)
+}

@@ -58,25 +58,29 @@ public extension Set
     }
     
     /// Remove an optional member from the set
-    /// - returns: **true** if the member was removed, **false** otherwise
-    mutating func remove(_ optionalMember: Element?) -> Element?
+    /// - returns: the removed if a member was removed, nil otherwise
+    mutating func remove(_ member: Element?) -> Element?
     {
-        guard let member = optionalMember else { return nil }
+        guard let member = member else { return nil }
         
         return remove(member)
     }
     
-    /** Removes all elements passing the test
-    - parameter test: The predicate used to sort out the elements to remove
+    /** Removes all members passing the test
+    - parameter test: The predicate used to sort out the members to remove
+    - returns: A set of the **removed** members
      */
-    mutating func remove(where test: (Element) -> Bool)
+    @discardableResult
+    mutating func remove(where test: (Element) -> Bool) -> Set<Element>
     {
-        subtract(filter(test))
+        let removed = sift(test)
+        subtract(removed)
+        return removed
     }
-    
     
     /** Removes all elements passing the test
      - parameter test: The predicate used to sort out the elements to remove
+     - returns: The remaining members
      */
     func removing(where test: (Element) -> Bool) -> Set<Element>
     {

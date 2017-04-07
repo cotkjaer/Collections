@@ -181,6 +181,23 @@ class SetTests: XCTestCase
         s = Set(3,4) + Set(a) + Set(1)
         
         XCTAssertEqual(s, Set(1,2,3,4))
+    }
+    
+    func test_remove()
+    {
+        var numbers = Set(1,2,3,4,5)
         
+        XCTAssertEqual(Set(1,2,3), numbers.removing(where: {$0 > 3}))
+        
+        let removed = numbers.remove(where: {$0 % 2 == 0})
+        
+        XCTAssertEqual(Set(1,3,5), numbers)
+        XCTAssertEqual(Set(2,4), removed)
+        
+        numbers -= { $0 > 3 }
+        
+        XCTAssertEqual(Set(1,3), numbers)
+        
+        XCTAssertEqual(Set(1), numbers - { $0 == 3 })
     }
 }
