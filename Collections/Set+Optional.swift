@@ -66,6 +66,24 @@ public extension Set
         return remove(member)
     }
     
+    /** Removes all elements passing the test
+    - parameter test: The predicate used to sort out the elements to remove
+     */
+    mutating func remove(where test: (Element) -> Bool)
+    {
+        subtract(filter(test))
+    }
+    
+    
+    /** Removes all elements passing the test
+     - parameter test: The predicate used to sort out the elements to remove
+     */
+    func removing(where test: (Element) -> Bool) -> Set<Element>
+    {
+        return sift({ !test($0) })
+    }
+    
+    
     /// - parameter optionalMember: the member to look for
     /// - Returns: `self.contains(optionalMember!)` if `optionalMember` is non-nil, **false** otherwise.
     func contains(_ optionalMember: Element?) -> Bool
