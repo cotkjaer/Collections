@@ -73,7 +73,7 @@ extension NilTollerableCollection
 
 
 
-public extension Collection where Index : Strideable
+public extension Collection where Index: Strideable
 {
     /**
      Gets the element at the specified (optional) index, if it exists and is within the collections bounds.

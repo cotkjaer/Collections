@@ -26,21 +26,21 @@ public extension Set
         self = Set(members.flatMap{$0})
     }
         
-    func union<S : Sequence>(_ optionalSequence: S?) -> Set<Element> where S.Iterator.Element == Element
+    func union<S: Sequence>(_ optionalSequence: S?) -> Set<Element> where S.Iterator.Element == Element
     {
         guard let sequence = optionalSequence else { return self }
 
         return union(sequence)
     }
     
-    mutating func formUnion<S : Sequence>(_ optionalSequence: S?) where S.Iterator.Element == Element
+    mutating func formUnion<S: Sequence>(_ optionalSequence: S?) where S.Iterator.Element == Element
     {
         guard let sequence = optionalSequence else { return }
  
         formUnion(sequence)
     }
     
-    mutating func subtract<S : Sequence>(_ optionalSequence: S?) where S.Iterator.Element == Element
+    mutating func subtract<S: Sequence>(_ optionalSequence: S?) where S.Iterator.Element == Element
     {
         guard let sequence = optionalSequence else { return }
 
@@ -66,8 +66,8 @@ public extension Set
         return remove(member)
     }
     
-    /// - parameter optionalMember : the member to look for
-    /// - Returns : `self.contains(optionalMember!)` if `optionalMember` is non-nil, **false** otherwise.
+    /// - parameter optionalMember: the member to look for
+    /// - Returns: `self.contains(optionalMember!)` if `optionalMember` is non-nil, **false** otherwise.
     func contains(_ optionalMember: Element?) -> Bool
     {
         guard let member = optionalMember else { return false }

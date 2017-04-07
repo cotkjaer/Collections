@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Uniques
 
-public extension Collection where Iterator.Element : Equatable
+public extension Collection where Iterator.Element: Equatable
 {
     /**
      Constructs an array removing the duplicate values in `self`

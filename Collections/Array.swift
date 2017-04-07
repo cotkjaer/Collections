@@ -13,16 +13,16 @@ import Foundation
 public extension Array
 {
     /// Init with elements produced by calling `closure` `count` times.
-    /// - parameter closure : The factory code, gets invoked with integers from `0..<count`
-    /// - parameter count : number of times to invoke the factory code
+    /// - parameter closure: The factory code, gets invoked with integers from `0..<count`
+    /// - parameter count: number of times to invoke the factory code
     public init(repeating closure: (Int) -> Element, count: Int)
     {
         self = (0..<count).map(closure)
     }
     
     /// Init with elements produced by calling `closure` `count` times.
-    /// - parameter closure : The factory code
-    /// - parameter count : number of times to invoke the factory code
+    /// - parameter closure: The factory code
+    /// - parameter count: number of times to invoke the factory code
     public init(repeating closure: () -> Element, count: Int)
     {
         self = (0..<count).map { _ in closure() }
@@ -77,7 +77,7 @@ public extension Array
 
 // MARK: - Changes
 
-public extension Array where Element : Equatable
+public extension Array where Element: Equatable
 {
     func missingIndicies(_ otherArray: Array<Element>) -> [Index]
     {

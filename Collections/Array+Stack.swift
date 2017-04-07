@@ -18,7 +18,7 @@ extension Array
      */
     mutating func pop() -> Element?
     {
-        return isEmpty ? nil : removeLast()
+        return isEmpty ? nil: removeLast()
     }
     
     /**

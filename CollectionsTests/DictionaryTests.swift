@@ -66,7 +66,7 @@ class DictionaryTests: XCTestCase
         XCTAssertEqual(d.count, 3)
         XCTAssertNotNil(d[3])
 
-        let i = d.flatMap { $0.characters.count > 2 ? nil : $0 }
+        let i = d.flatMap { $0.characters.count > 2 ? nil: $0 }
         
         XCTAssertEqual(i.count, 2)
         XCTAssertNil(i[3])

@@ -8,24 +8,24 @@
 
 // MARK: - Min & max
 
-public func max<S : Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
+public func max<S: Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
 {
     return try sequence.max(by: isOrderedBefore)
 }
 
-public func max<S : Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
+public func max<S: Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
 {
     return sequence.max()
 }
 
-public func min<S : Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
+public func min<S: Sequence>(_ sequence: S) -> S.Iterator.Element? where S.Iterator.Element:Comparable
 {
     return sequence.min()
     
-    //    return sequence.reduce(nil, combine: { $0 == nil ? $1 : $0 < $1 ? $0 : $1 })
+    //    return sequence.reduce(nil, combine: { $0 == nil ? $1: $0 < $1 ? $0: $1 })
 }
 
-public func min<S : Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
+public func min<S: Sequence>(_ sequence: S, isOrderedBefore: (S.Iterator.Element, S.Iterator.Element) throws -> Bool) rethrows -> S.Iterator.Element?
 {
     return try sequence.min(by: isOrderedBefore)
 }
@@ -166,6 +166,14 @@ public extension Sequence
     {
         return flatMap { $0 as? T }
     }
+    
+    
+    /// Return an `Array` contisting of the members of `self`, that are `T`s
+    
+    func cast<T>() -> Array<T>
+    {
+        return flatMap { $0 as? T }
+    }
 }
 
 // MARK: - Iterate
@@ -179,7 +187,7 @@ public extension Sequence
      */
     public func iterate(_ closure: ((_ index: Int, _ element: Iterator.Element, _ stop: inout Bool) -> ()))
     {
-        var stop : Bool = false
+        var stop: Bool = false
         
         for (index, element) in enumerated()
         {
@@ -196,7 +204,7 @@ public extension Sequence
      */
     public func iterate(_ closure: ((_ element: Iterator.Element, _ stop: inout Bool) -> ()))
     {
-        var stop : Bool = false
+        var stop: Bool = false
         
         for element in self
         {
@@ -227,7 +235,7 @@ public extension Sequence where Iterator.Element: Hashable
      - returns: **true** if the two sequences share any elements
      */
     
-    func intersects<S : Sequence>(_ sequence: S?) -> Bool where S.Iterator.Element == Iterator.Element
+    func intersects<S: Sequence>(_ sequence: S?) -> Bool where S.Iterator.Element == Iterator.Element
     {
         return sequence?.contains(where: { contains($0) }) ?? false
     }
@@ -241,7 +249,7 @@ extension Sequence where Iterator.Element == String
     }
 }
 
-extension Sequence where Iterator.Element : CustomDebugStringConvertible
+extension Sequence where Iterator.Element: CustomDebugStringConvertible
 {
     public func debugDescription(_ separator: String, prefix: String, suffix: String = "") -> String
     {

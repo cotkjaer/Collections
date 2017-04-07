@@ -28,7 +28,7 @@ extension Array
      */
     public mutating func dequeue() -> Element?
     {
-        return isEmpty ? nil : removeFirst()
+        return isEmpty ? nil: removeFirst()
     }
     
 }

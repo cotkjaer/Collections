@@ -10,12 +10,12 @@ import Foundation
 
 // MARK: - Operators
 
-public func - <T, S : Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
+public func - <T, S: Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
 {
     return lhs.subtracting(rhs)
 }
 
-public func + <T, S : Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
+public func + <T, S: Sequence>(lhs: Set<T>, rhs: S) -> Set<T> where S.Iterator.Element == T
 {
     return lhs.union(rhs)
 }
@@ -32,7 +32,7 @@ public func + <T>(lhs: T, rhs: Set<T>?) -> Set<T>
     return rhs + lhs
 }
 
-public func += <T, S : Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
+public func += <T, S: Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
 {
     guard let rhs = rhs else { return }
     
@@ -44,7 +44,7 @@ public func += <T>(lhs: inout Set<T>, rhs: T?)
     let _ = lhs.insert(rhs)
 }
 
-public func - <T, S : Sequence>(lhs: Set<T>, rhs: S?) -> Set<T> where S.Iterator.Element == T
+public func - <T, S: Sequence>(lhs: Set<T>, rhs: S?) -> Set<T> where S.Iterator.Element == T
 {
     if let r = rhs
     {
@@ -61,7 +61,7 @@ public func - <T>(lhs: Set<T>, rhs: T?) -> Set<T>
     return lhs - rhs
 }
 
-public func -= <T, S : Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
+public func -= <T, S: Sequence>(lhs: inout Set<T>, rhs: S?) where S.Iterator.Element == T
 {
     lhs.subtract(rhs)
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Christian Otkjær. All rights reserved.
 //
 
-public extension RangeReplaceableCollection where Index : Strideable
+public extension RangeReplaceableCollection where Index: Strideable
 {
     /**
      Sets the element at the specified optional index, if it exists and is within the collections bounds.

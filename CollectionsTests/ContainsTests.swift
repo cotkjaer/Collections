@@ -12,7 +12,7 @@ import XCTest
 
 class ContainsTests: XCTestCase
 {
-    let arrays : [[Int]] = [[], [1,2,3], [2,3], [3,4], [2,3,4]]
+    let arrays: [[Int]] = [[], [1,2,3], [2,3], [3,4], [2,3,4]]
     
     let expectations =
         [[true, false, false, false, false],

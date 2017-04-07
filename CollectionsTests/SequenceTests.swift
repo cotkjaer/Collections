@@ -47,7 +47,7 @@ class SequenceTypeTests: XCTestCase {
         XCTAssertEqual(min([1]), 1)
         XCTAssertEqual(max([1]), 1)
         
-        let emptyArray : [Int] = []
+        let emptyArray: [Int] = []
         
         XCTAssertNil(min(emptyArray))
         XCTAssertNil(max(emptyArray))

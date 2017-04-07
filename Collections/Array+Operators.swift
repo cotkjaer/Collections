@@ -10,7 +10,7 @@ import Foundation
 /**
  Add a optional array
  */
-infix operator ?+ : AdditionPrecedence //{ associativity left precedence 130 }
+infix operator ?+: AdditionPrecedence //{ associativity left precedence 130 }
 
 public func ?+ <T> (first: [T], optionalSecond: [T]?) -> [T]
 {
@@ -24,7 +24,7 @@ public func ?+ <T> (first: [T], optionalSecond: [T]?) -> [T]
     }
 }
 
-infix operator ?+= : AdditionPrecedence // { associativity right precedence 90 }
+infix operator ?+=: AdditionPrecedence // { associativity right precedence 90 }
 
 public func ?+= <T> (left: inout [T], optionalRight: [T]?)
 {

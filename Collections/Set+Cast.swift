@@ -15,4 +15,10 @@ extension Set
     {
         return map { $0 as? T }
     }
+    
+    /// Return a `Set` contisting of the members of `self`, that are `T`s
+    public func cast<T:Hashable>() -> Set<T>
+    {
+        return map { $0 as? T }
+    }
 }

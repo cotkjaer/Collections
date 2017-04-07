@@ -110,7 +110,7 @@ extension Array
         
         if let (_, element) = match
         {
-            return closure(element) == 0 ? element : nil
+            return closure(element) == 0 ? element: nil
         }
         else
         {

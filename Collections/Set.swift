@@ -11,8 +11,8 @@
 public extension Set
 {
     /// Init with elements produced by calling `closure` `count` times.
-    /// - parameter closure : The factory code, gets invoked with integers from `0..<count`
-    /// - parameter count : number of times to invoke `closure`
+    /// - parameter closure: The factory code, gets invoked with integers from `0..<count`
+    /// - parameter count: number of times to invoke `closure`
     public init(repeating closure: (Int) -> Element, count: Int)
     {
         self.init()
@@ -21,8 +21,8 @@ public extension Set
     }
     
     /// Init with elements produced by calling `closure` `count` times.
-    /// - parameter closure : The factory code
-    /// - parameter count : number of times to invoke the `closure`
+    /// - parameter closure: The factory code
+    /// - parameter count: number of times to invoke the `closure`
     public init(repeating closure: () -> Element, count: Int)
     {
         self.init()
@@ -31,7 +31,7 @@ public extension Set
     }
     
     /// Init with members produced by calling `closure` repeatedly, until it returns `nil`.
-    /// - parameter closure : the closure producing members
+    /// - parameter closure: the closure producing members
     /// - warning: Calls `closure` until it returns nil
     init(repeating closure: () -> Element?)
     {
@@ -55,14 +55,14 @@ extension Set
     }
     
     /// Remove all members in `self` that satisfy the predicate; the reverse of `filter`
-    /// - parameter predicate : predicate to determine if the element should be removed
+    /// - parameter predicate: predicate to determine if the element should be removed
     public mutating func reject(_ predicate: (Element) -> Bool)
     {
         subtract(filter(predicate))
     }
     
     /// Construct a new set containing only the members that satisfy the predicate; filter for sets
-    /// - parameter predicate : the predicate
+    /// - parameter predicate: the predicate
     /// - Returns: A `Set` consisting of the members of `self`, that satisfy `predicate`
     public func sift(_ predicate: (Element) throws -> Bool) rethrows -> Set<Element>
     {

@@ -12,14 +12,14 @@ import XCTest
 
 //MARK: - Hashable
 
-class A : Hashable
+class A: Hashable
 {
-    var hashValue : Int { return 1 }
+    var hashValue: Int { return 1 }
 }
 
-class B: A { override var hashValue : Int { return 2 } }
+class B: A { override var hashValue: Int { return 2 } }
 
-class C: A { override var hashValue : Int { return 3 } }
+class C: A { override var hashValue: Int { return 3 } }
 
 
 func == (lhs: A, rhs:A) -> Bool
@@ -82,7 +82,7 @@ class SetTests: XCTestCase
     
     func testUnion()
     {
-        var noSet : Set<Int>? = Set()
+        var noSet: Set<Int>? = Set()
         
         XCTAssertEqual(set1.union(set23), Set(1,2,3))
         XCTAssertEqual(set23.union(set0), set23)

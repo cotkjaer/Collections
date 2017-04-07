@@ -8,7 +8,7 @@
 
 // MARK: - Optional versions
 
-extension Collection where Self.Iterator.Element : Equatable
+extension Collection where Self.Iterator.Element: Equatable
 {
     ///Returns the first index where `optionalElement` appears in `self` or `nil` if `optionalElement` is not found.
     public func index(of optionalElement: Iterator.Element?) -> Index?
@@ -29,7 +29,7 @@ extension Collection where Self.Iterator.Element : Equatable
     // MARK: - Contains
 
     /// Returns `true` if all elements in `collection` are also in `self`, `false` otherwise
-    public func contains<C : Collection>(_ optionalCollection: C?) -> Bool where Iterator.Element == C.Iterator.Element
+    public func contains<C: Collection>(_ optionalCollection: C?) -> Bool where Iterator.Element == C.Iterator.Element
     {
         guard let collection = optionalCollection else { return false }
         
@@ -39,7 +39,7 @@ extension Collection where Self.Iterator.Element : Equatable
 
 // MARK: - at
 
-extension Collection where Index : Strideable
+extension Collection where Index: Strideable
 {
     /**
      Creates an array with the elements at the specified indexes.
@@ -55,7 +55,7 @@ extension Collection where Index : Strideable
 
 // MARK: - Last Index
 
-public extension Collection where Index : Strideable
+public extension Collection where Index: Strideable
 {
     /**
      The collection's last valid read index, or `nil` if the collection is empty.
@@ -63,5 +63,5 @@ public extension Collection where Index : Strideable
      
      - Complexity: O(1)
      */
-    public var lastIndex : Index? { return isEmpty ?  nil : endIndex.advanced(by:-1) }
+    public var lastIndex: Index? { return isEmpty ?  nil: endIndex.advanced(by:-1) }
 }

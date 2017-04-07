@@ -38,7 +38,7 @@ extension NSIndexSet
     
     // MARK: - Sets and NSIndexSet
     
-    public var indicies : Set<Int>
+    public var indicies: Set<Int>
     {
         var set = Set<Int>()
         
