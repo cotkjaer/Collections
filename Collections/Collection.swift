@@ -37,16 +37,6 @@ extension Collection where Self.Iterator.Element: Equatable
     }
 }
 
-extension Collection
-{
-    public func find(where predicate: (Element) -> Bool ) -> Element?
-    {
-        guard let index = self.index(where: predicate) else { return nil }
-        
-        return self[index]
-    }
-}
-
 // MARK: - at
 
 extension Collection where Index: Strideable

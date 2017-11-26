@@ -31,6 +31,9 @@ class CollectionsTests: XCTestCase
         
         XCTAssertEqual(array.find(where: { $0 == 7 }), 7)
         XCTAssertNil(array.find(where: { $0 == 8 }))
+        
+        XCTAssertNil(array.find(-1))
+        XCTAssertEqual(array.find(3), 3)
     }
     
     func test_Queue()
