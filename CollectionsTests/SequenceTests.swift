@@ -31,6 +31,39 @@ class SequenceTypeTests: XCTestCase {
         
         XCTAssertEqual(counter, 18)
     }
+    
+    func test_first()
+    {
+        let array = [1,2,3,4,5,6,7,9,10]
+        
+        XCTAssertEqual(array.first(where: { $0 == 7 }), 7)
+        XCTAssertNil(array.first(where: { $0 == 8 }))
+        
+        XCTAssertNil(array.first(-1))
+        XCTAssertEqual(array.first(3), 3)
+        
+        class A
+        {
+            init() {
+                
+            }
+        }
+        
+        class B:A {}
+        class C:A {}
+        class D:A {}
+        
+        let classes = [A(), A(), C(), C(), B(), A()]
+        
+        let b: B? = classes.first()
+        
+        XCTAssertNotNil(b)
+        
+        let d: D? = classes.first()
+        
+        XCTAssertNil(d)
+        
+    }
 
     func test_min_max()
     {

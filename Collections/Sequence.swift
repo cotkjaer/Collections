@@ -150,15 +150,6 @@ public extension Sequence
         }
     }
     
-    /**
-     Finds and returns the first element of the specified type (cast as that type).
-     
-     - returns: First element to match the type or nil, if none did
-     */
-    func first<T>() -> T?
-    {
-        return first(where: {$0 is T}) as? T
-    }
     
     /// Return an `Array` contisting of the members of `self`, that are `T`s
     

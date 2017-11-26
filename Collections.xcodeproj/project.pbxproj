@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8F4153681D3CDED800199F57 /* ContainsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4153671D3CDED800199F57 /* ContainsTests.swift */; };
-		8F7153481FCB717B00793173 /* Collection+Find.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7153471FCB717B00793173 /* Collection+Find.swift */; };
+		8F71534A1FCB7CD300793173 /* Sequence+First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7153491FCB7CD300793173 /* Sequence+First.swift */; };
 		8F8C22921DCFBA6700E7DBD9 /* Collection+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C22911DCFBA6700E7DBD9 /* Collection+Optional.swift */; };
 		8F8C22961DCFBB1600E7DBD9 /* Set+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C22951DCFBB1600E7DBD9 /* Set+Operators.swift */; };
 		8F8C22981DCFBB7F00E7DBD9 /* Collection+Unique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C22971DCFBB7F00E7DBD9 /* Collection+Unique.swift */; };
@@ -51,7 +51,7 @@
 
 /* Begin PBXFileReference section */
 		8F4153671D3CDED800199F57 /* ContainsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainsTests.swift; sourceTree = "<group>"; };
-		8F7153471FCB717B00793173 /* Collection+Find.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Find.swift"; sourceTree = "<group>"; };
+		8F7153491FCB7CD300793173 /* Sequence+First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+First.swift"; sourceTree = "<group>"; };
 		8F8C22911DCFBA6700E7DBD9 /* Collection+Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Optional.swift"; sourceTree = "<group>"; };
 		8F8C22951DCFBB1600E7DBD9 /* Set+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Set+Operators.swift"; sourceTree = "<group>"; };
 		8F8C22971DCFBB7F00E7DBD9 /* Collection+Unique.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Unique.swift"; sourceTree = "<group>"; };
@@ -151,10 +151,10 @@
 				8F8C22A91DD0B34400E7DBD9 /* Array+Stack.swift */,
 				8F8C22AB1DD0BFF900E7DBD9 /* Array+Queue.swift */,
 				8FCE6B491C805CA00079A587 /* Sequence.swift */,
+				8F7153491FCB7CD300793173 /* Sequence+First.swift */,
 				8FCE6B4A1C805CA00079A587 /* Collection.swift */,
 				8F8C22911DCFBA6700E7DBD9 /* Collection+Optional.swift */,
 				8F8C22971DCFBB7F00E7DBD9 /* Collection+Unique.swift */,
-				8F7153471FCB717B00793173 /* Collection+Find.swift */,
 				8FCE6B4B1C805CA00079A587 /* RangeReplaceableCollection.swift */,
 				8FCE6B4C1C805CA00079A587 /* Set.swift */,
 				8F8C229F1DCFC52800E7DBD9 /* Set+Cast.swift */,
@@ -297,10 +297,10 @@
 				8FCE6B881C8061170079A587 /* IndexSet.swift in Sources */,
 				8FCE6B541C805CA00079A587 /* Set.swift in Sources */,
 				8F8C22A01DCFC52800E7DBD9 /* Set+Cast.swift in Sources */,
-				8F7153481FCB717B00793173 /* Collection+Find.swift in Sources */,
 				8F8C22A21DCFC77500E7DBD9 /* Set+Optional.swift in Sources */,
 				8FCE6B511C805CA00079A587 /* Sequence.swift in Sources */,
 				8F8C229C1DCFC15F00E7DBD9 /* Array+Operators.swift in Sources */,
+				8F71534A1FCB7CD300793173 /* Sequence+First.swift in Sources */,
 				8F8C22921DCFBA6700E7DBD9 /* Collection+Optional.swift in Sources */,
 				8FE664D51CF5B1B1003AD6BC /* Dictionary.swift in Sources */,
 				8F8C22AA1DD0B34400E7DBD9 /* Array+Stack.swift in Sources */,
