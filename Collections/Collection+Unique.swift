@@ -17,9 +17,9 @@ public extension Collection where Iterator.Element: Equatable
      
      - returns: An Array of the unique values in `self`
      */
-    func uniques() -> Array<Generator.Element>
+    func uniques() -> Array<Iterator.Element>
     {
-        var result = Array<Generator.Element>()
+        var result = Array<Iterator.Element>()
         
         for item in self
         {

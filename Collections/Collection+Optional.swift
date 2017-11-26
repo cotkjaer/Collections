@@ -81,7 +81,7 @@ public extension Collection where Index: Strideable
      - parameter optionaleIndex: the optional index to look up
      - returns: the element at the index in `self`
      */
-    func get(_ index: Index?) -> Generator.Element?
+    func get(_ index: Index?) -> Iterator.Element?
     {
         guard let index = index else { return nil }
         

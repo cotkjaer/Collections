@@ -39,10 +39,10 @@ class SequenceTypeTests: XCTestCase {
         XCTAssertEqual(min(set), 1)
         XCTAssertEqual(max(set), 3)
         
-        let array = Array(arrayLiteral: -M_E, 0.2, 1, 0.0001, M_PI)
+        let array = Array(arrayLiteral: -M_E, 0.2, 1, 0.0001, Double.pi)
         
         XCTAssertEqual(min(array), -M_E)
-        XCTAssertEqual(max(array), M_PI)
+        XCTAssertEqual(max(array), Double.pi)
         
         XCTAssertEqual(min([1]), 1)
         XCTAssertEqual(max([1]), 1)
@@ -57,15 +57,10 @@ class SequenceTypeTests: XCTestCase {
             return lhs.compare(rhs, options: NSString.CompareOptions.caseInsensitive) != ComparisonResult.orderedDescending
         }
         
-        func characterCount(_ string: String) -> Int
-        {
-            return string.characters.count
-        }
-        
         let strings = Set(arrayLiteral: "sup'", "hello", "hi", "how do you do?")
         
-        XCTAssertEqual(max(strings, isOrderedBefore: { characterCount($0) < characterCount($1)}), "how do you do?")
-        XCTAssertEqual(min(strings, isOrderedBefore: { characterCount($0) < characterCount($1)}), "hi")
+        XCTAssertEqual(max(strings, isOrderedBefore: { $0.count < $1.count }), "how do you do?")
+        XCTAssertEqual(min(strings, isOrderedBefore: { $0.count < $1.count }), "hi")
         
         XCTAssertEqual(max(strings, isOrderedBefore: compareLexio), "sup'")
     }

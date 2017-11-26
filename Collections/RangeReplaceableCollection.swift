@@ -15,7 +15,7 @@ public extension RangeReplaceableCollection where Index: Strideable
      - returns: the element at the index in `self`
      */
     
-    public mutating func set(element: Generator.Element?, at index: Index?) -> Generator.Element?
+    public mutating func set(element: Iterator.Element?, at index: Index?) -> Iterator.Element?
     {
         guard let index = index else { return nil }
         
@@ -51,7 +51,7 @@ public extension RangeReplaceableCollection
      - Returns: the inserted element iff it was inserted
      */
     @discardableResult
-    mutating func insert(_ optionalElement: Generator.Element?, at index: Self.Index) -> Generator.Element?
+    mutating func insert(_ optionalElement: Iterator.Element?, at index: Self.Index) -> Iterator.Element?
     {
         if let element = optionalElement
         {
@@ -69,7 +69,7 @@ public extension RangeReplaceableCollection
      - returns: element iff it was prepended, nil otherwise
      */
     @discardableResult
-    mutating func prepend(_ optionalElement: Generator.Element?) -> Generator.Element?
+    mutating func prepend(_ optionalElement: Iterator.Element?) -> Iterator.Element?
     {
         return insert(optionalElement, at: startIndex)
     }
@@ -82,7 +82,7 @@ public extension RangeReplaceableCollection
      - returns: element iff it was appended, nil otherwise
      */
     @discardableResult
-    mutating func append(_ optionalElement: Generator.Element?) -> Generator.Element?
+    mutating func append(_ optionalElement: Iterator.Element?) -> Iterator.Element?
     {
         return insert(optionalElement, at: endIndex)
     }

@@ -27,7 +27,7 @@ class DictionaryTests: XCTestCase
         let d = Dictionary([(1, "A"),(2, "BB")])
         
         let fi = d.mapPairs { (i, s) -> (Float, Int) in
-            (Float(i), s.characters.count)
+            (Float(i), s.count)
         }
         
         XCTAssertEqual(fi.count, 2)
@@ -53,7 +53,7 @@ class DictionaryTests: XCTestCase
     {
         let d = Dictionary([(1, "A"),(2, "BB"), (3, "CCC")])
         
-        let i = d.map {$0.characters.count}
+        let i = d.map {$0.count}
         
         XCTAssertEqual(i.count, 3)
         XCTAssertEqual(i[2], 2)
@@ -66,7 +66,7 @@ class DictionaryTests: XCTestCase
         XCTAssertEqual(d.count, 3)
         XCTAssertNotNil(d[3])
 
-        let i = d.flatMap { $0.characters.count > 2 ? nil: $0 }
+        let i = d.flatMap { $0.count > 2 ? nil: $0 }
         
         XCTAssertEqual(i.count, 2)
         XCTAssertNil(i[3])

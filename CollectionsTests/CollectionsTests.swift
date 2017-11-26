@@ -25,6 +25,14 @@ class CollectionsTests: XCTestCase
         XCTAssertEqual(f, Float(3))
     }
     
+    func test_find()
+    {
+        let array = [1,2,3,4,5,6,7,9,10]
+        
+        XCTAssertEqual(array.find(where: { $0 == 7 }), 7)
+        XCTAssertNil(array.find(where: { $0 == 8 }))
+    }
+    
     func test_Queue()
     {
         var queue = Array<Int>()

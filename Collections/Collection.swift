@@ -19,7 +19,7 @@ extension Collection where Self.Iterator.Element: Equatable
     }
     
     ///Returns the first element that is equal to `optionalElement` or `nil` if `optionalElement` is not found.
-    public func first(_ optionalElement: Generator.Element?) -> Generator.Element?
+    public func first(_ optionalElement: Iterator.Element?) -> Iterator.Element?
     {
         guard let element = optionalElement else { return nil }
 
@@ -37,6 +37,16 @@ extension Collection where Self.Iterator.Element: Equatable
     }
 }
 
+extension Collection
+{
+    public func find(where predicate: (Element) -> Bool ) -> Element?
+    {
+        guard let index = self.index(where: predicate) else { return nil }
+        
+        return self[index]
+    }
+}
+
 // MARK: - at
 
 extension Collection where Index: Strideable
@@ -47,7 +57,7 @@ extension Collection where Index: Strideable
      - parameter indexes: Indexes of the elements to get
      - returns: Array with the elements at indexes
      */
-    func at(indexes: Index...) -> Array<Generator.Element>
+    func at(indexes: Index...) -> Array<Iterator.Element>
     {
         return indexes.flatMap { get($0) }
     }

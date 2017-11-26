@@ -15,6 +15,8 @@ class ArrayTests: XCTestCase
     {
         let s = Array(literalOptionals: 1,2)
         
+        XCTAssertEqual(s.count, 2)
+        
         let a: Set<Int>? = nil
         
         let A = a?.flatMap({$0})//Array?(optionals: a) as [Int]?
@@ -22,13 +24,10 @@ class ArrayTests: XCTestCase
         XCTAssertNil(A)
 
         let b: Set<Int>? = Set<Int>(arrayLiteral: 1,2,3,4)
-        /*
-        Array<Int>(optionals: b)
         
         XCTAssertNotNil(Array(optionals: b))
         
-        XCTAssertEqual(Array(optionals: b).count, b?.count)
- */
+        XCTAssertEqual(Array(optionals: b)?.count, b?.count)
     }
     
     func testChanges()
