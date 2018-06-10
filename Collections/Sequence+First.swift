@@ -13,7 +13,7 @@ extension Sequence
     /** find the first element in `self` that is of the infered type `T`
     - returns: The first element in `self` that `is T` (cast as a T), or nil if none are
      */
-    func first<T>() -> T?
+    public func first<T>() -> T?
     {
         return first(where: {$0 is T}) as? T
     }
