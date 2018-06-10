@@ -65,8 +65,8 @@ extension Dictionary
         return Dictionary<Key, OutValue>(try map { (k, v) in (k, try transform(v)) })
     }
 
-    public func flatMap<OutValue>(transform: (Value) throws -> OutValue?) rethrows -> Dictionary<Key, OutValue>
+    public func compactMap<OutValue>(transform: (Value) throws -> OutValue?) rethrows -> Dictionary<Key, OutValue>
     {
-        return Dictionary<Key, OutValue>(try flatMap { (k, v) in if let vv = try transform(v) { return (k, vv) } else { return nil } })
+        return Dictionary<Key, OutValue>(try compactMap { (k, v) in if let vv = try transform(v) { return (k, vv) } else { return nil } })
     }
 }

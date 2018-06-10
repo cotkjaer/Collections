@@ -101,7 +101,7 @@ public extension Sequence
      */
     func mapToSet<E:Hashable>(_ transform: (Iterator.Element) -> E?) -> Set<E>
     {
-        return Set(flatMap(transform))
+        return Set(compactMap(transform))
     }
     
     /**
@@ -155,7 +155,7 @@ public extension Sequence
     
     func cast<T>(_ type: T.Type) -> Array<T>
     {
-        return flatMap { $0 as? T }
+        return compactMap { $0 as? T }
     }
     
     
@@ -163,7 +163,7 @@ public extension Sequence
     
     func cast<T>() -> Array<T>
     {
-        return flatMap { $0 as? T }
+        return compactMap { $0 as? T }
     }
 }
 

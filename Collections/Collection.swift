@@ -49,7 +49,7 @@ extension Collection where Index: Strideable
      */
     func at(indexes: Index...) -> Array<Iterator.Element>
     {
-        return indexes.flatMap { get($0) }
+        return indexes.compactMap { get($0) }
     }
 }
 

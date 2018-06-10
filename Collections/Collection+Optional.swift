@@ -58,14 +58,14 @@ extension NilTollerableCollection
     
     public init<S: Sequence>(optionals: S) where S.Iterator.Element == Iterator.Element?
     {
-        let elements = optionals.flatMap { $0 }
+        let elements = optionals.compactMap { $0 }
         
         self.init(elements)
     }
     
     public init?<S: Sequence>(optionals: S?) where S.Iterator.Element == Iterator.Element?
     {
-        guard let es = optionals?.flatMap( { $0 } ) else { return nil }
+        guard let es = optionals?.compactMap( { $0 } ) else { return nil }
         
         self.init(es)
     }

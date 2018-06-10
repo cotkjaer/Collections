@@ -59,14 +59,14 @@ class DictionaryTests: XCTestCase
         XCTAssertEqual(i[2], 2)
     }
 
-    func test_flatMap()
+    func test_compactMap()
     {
         let d = Dictionary([(1, "A"),(2, "BB"), (3, "CCC")])
 
         XCTAssertEqual(d.count, 3)
         XCTAssertNotNil(d[3])
 
-        let i = d.flatMap { $0.count > 2 ? nil: $0 }
+        let i = d.compactMap { $0.count > 2 ? nil: $0 }
         
         XCTAssertEqual(i.count, 2)
         XCTAssertNil(i[3])

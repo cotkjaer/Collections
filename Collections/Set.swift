@@ -51,7 +51,7 @@ extension Set
     /// Return a `Set` contisting of the non-nil results of applying `transform` to each member of `self`
     public func map<E:Hashable>(_ transform: (Element) -> E?) -> Set<E>
     {
-        return Set<E>(flatMap(transform))
+        return Set<E>(compactMap(transform))
     }
     
     /// Remove all members in `self` that satisfy the predicate; the reverse of `filter`

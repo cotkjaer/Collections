@@ -19,7 +19,7 @@ class ArrayTests: XCTestCase
         
         let a: Set<Int>? = nil
         
-        let A = a?.flatMap({$0})//Array?(optionals: a) as [Int]?
+        let A = a?.compactMap({$0})//Array?(optionals: a) as [Int]?
         
         XCTAssertNil(A)
 

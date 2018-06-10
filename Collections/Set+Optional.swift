@@ -23,7 +23,7 @@ public extension Set
      */
     public init(_ members: Element?...)
     {
-        self = Set(members.flatMap{$0})
+        self = Set(members.compactMap{$0})
     }
         
     func union<S: Sequence>(_ optionalSequence: S?) -> Set<Element> where S.Iterator.Element == Element
